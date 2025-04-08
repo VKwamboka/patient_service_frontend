@@ -16,8 +16,32 @@
   
   /* .main_login{
     background-color: #072431;
-    height: 100vh;
+    
+  } */
+ 
+  /* Limit the height of the entire card */
+.login-wrapper {
+    max-width: 900px;
+    width: 100%;
+    height: auto;
+    max-height: 600px; /* Adjust this as needed */
+    border-radius: 1rem;
+    overflow: hidden;
+  }
+  
+  /* Ensure both columns stretch equally */
+  .login-wrapper > .col-md-6 {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  } */
+  }
+  
+  /* Limit image height to match the card and keep it pretty */
+  img.object-fit-cover {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    max-height: 600px; /* Match login-wrapper max-height */
+  }
+  
+  
