@@ -1,1 +1,83 @@
-<p>register works!</p>
+<div class="main_signup">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100 ">
+      <div class="row shadow-lg rounded-2 overflow-hidden signup-wrapper ">
+        
+        <!-- Left side: Image -->
+        <div class="col-md-6 p-0">
+          <img src="/AIDOC.webp" alt="Health Illustration" class="img-fluid object-fit-cover" />
+        </div>
+  
+        <!-- Right side: Signup Form -->
+        <div class="col-md-6 p-5 bg-white d-flex flex-column justify-content-center">
+          <div class="signup-card mx-auto" style="max-width: 420px; width: 100%;">
+            <h1 class="text-primary mb-3">Create Account</h1>
+            <p class="text-secondary mb-4">Join us to get your personalized health insights.</p>
+
+            <div class="mb-4">
+                <label class="form-label d-block">Registering as:</label>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="role" id="doctor" value="doctor"
+                         [checked]="role === 'doctor'" (change)="onRoleChange('doctor')">
+                  <label class="form-check-label" for="doctor">Doctor</label>
+                </div>
+              
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="role" id="patient" value="patient"
+                         [checked]="role === 'patient'" (change)="onRoleChange('patient')">
+                  <label class="form-check-label" for="patient">Patient</label>
+                </div>
+              </div>
+              
+  
+            <form #signupForm="ngForm" (ngSubmit)="onSignup(signupForm)" novalidate>
+              <div class="mb-3">
+                <!-- <label>Full Name:</label> -->
+                <input name="name" type="text" placeholder="Full Name" class="form-control" [(ngModel)]="user.name" required #nameRef="ngModel" />
+                <div *ngIf="nameRef.invalid && nameRef.touched" class="text-danger">
+                  <small>Name is required.</small>
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <!-- <label>Email:</label> -->
+                <input name="email" type="email" placeholder="Enter Email" class="form-control" [(ngModel)]="user.email" required email #emailRef="ngModel" />
+                <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger">
+                  <small *ngIf="emailRef.errors?.['required']">Email is required.</small>
+                  <small *ngIf="emailRef.errors?.['email']">Enter a valid email.</small>
+                </div>
+              </div>
+  
+              <div class="mb-3">
+                <!-- <label>Password:</label> -->
+                <input name="password" type="password" placeholder="Password" class="form-control" [(ngModel)]="user.password" required minlength="6" #passRef="ngModel" />
+                <div *ngIf="passRef.invalid && passRef.touched" class="text-danger">
+                  <small *ngIf="passRef.errors?.['required']">Password is required.</small>
+                  <small *ngIf="passRef.errors?.['minlength']">Min 6 characters.</small>
+                </div>
+              </div>
+              <!-- confirm password -->
+                <div class="mb-3">
+                    <!-- <label>Confirm Password:</label> -->
+                    <input name="confirmPassword" type="password" placeholder="Confirm Password" class="form-control" [(ngModel)]="user.confirmPassword" required minlength="6" #confirmPassRef="ngModel" />
+                    <div *ngIf="confirmPassRef.invalid && confirmPassRef.touched" class="text-danger">
+                        <small *ngIf="confirmPassRef.errors?.['required']">Confirm Password is required.</small>
+                        <small *ngIf="confirmPassRef.errors?.['minlength']">Min 6 characters.</small>
+                    </div>
+                </div>
+  
+              <button type="submit" class="btn btn-primary w-100" [disabled]="signupForm.invalid">
+                Sign Up
+              </button>
+
+            </form>
+            <div class="mt-3 text-center">
+                <p class="text-secondary mb-0">Already have an account? <a (click)="goToLogin()" class="text-primary">Login here</a></p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
