@@ -1,1 +1,42 @@
-<p>doctors works!</p>
+<div class="container mt-4">
+    <h4>Available Doctors</h4>
+    <p class="text-muted">You can view doctor details and book appointments.</p>
+  
+    <!-- Search Bar -->
+    <div class="mb-3">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search by name or specialty..."
+        [(ngModel)]="searchTerm"
+      />
+    </div>
+  
+    <div class="row g-4">
+      <ng-container *ngIf="filteredDoctors.length > 0; else noDoctors">
+        <div class="col-md-4" *ngFor="let doc of filteredDoctors">
+          <div class="card shadow-sm h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ doc.name }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ doc.specialty }}</h6>
+              <p class="card-text">
+                📧 {{ doc.email }}<br />
+                📞 {{ doc.phone }}
+              </p>
+              <button class="btn btn-outline-primary" (click)="bookAppointment(doc)">
+                Book Appointment
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  
+    <!-- No Doctors Found -->
+    <ng-template #noDoctors>
+      <div class="text-muted text-center mt-3">
+        <p>😕 No doctors match your search.</p>
+      </div>
+    </ng-template>
+  </div>
+  
