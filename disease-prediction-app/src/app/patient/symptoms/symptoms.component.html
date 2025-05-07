@@ -2,47 +2,6 @@
     <h4>Select Your Symptoms</h4>
     <p class="text-muted">Choose symptoms from the list below:</p>
 
-    <!-- <div class="mb-3">
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Search symptom..."
-          [(ngModel)]="searchTerm"
-        />
-    </div> -->
-      
-  
-    <!-- <div class="mb-3">
-      <div class="row g-2">
-        <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
-          <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
-            <button class="btn w-100"
-                    [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
-                    (click)="toggleSymptom(symptom)">
-              {{ symptom }}
-            </button>
-          </div>
-        </ng-container>
-        <ng-template #noSymptomFound>
-          <div class="text-center text-muted">
-            <p>😢 Symptom not in the list</p>
-            <small>We’re working on adding more symptoms soon.</small>
-          </div>
-        </ng-template>
-      </div>
-      <div class="row g-2">
-        
-
-        <div class="col-md-3" *ngFor="let symptom of symptomsList">
-          <button class="btn w-100"
-                  [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
-                  (click)="toggleSymptom(symptom)">
-            {{ symptom }}
-          </button>
-        </div>
-      </div>
-    </div>
-   -->
    <div class="mb-3">
     <!-- Search Input -->
     <input
