@@ -1,1 +1,93 @@
-<p>symptoms works!</p>
+<div class="container mt-4">
+    <h4>Select Your Symptoms</h4>
+    <p class="text-muted">Choose symptoms from the list below:</p>
+
+    <!-- <div class="mb-3">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Search symptom..."
+          [(ngModel)]="searchTerm"
+        />
+    </div> -->
+      
+  
+    <!-- <div class="mb-3">
+      <div class="row g-2">
+        <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
+          <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
+            <button class="btn w-100"
+                    [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
+                    (click)="toggleSymptom(symptom)">
+              {{ symptom }}
+            </button>
+          </div>
+        </ng-container>
+        <ng-template #noSymptomFound>
+          <div class="text-center text-muted">
+            <p>😢 Symptom not in the list</p>
+            <small>We’re working on adding more symptoms soon.</small>
+          </div>
+        </ng-template>
+      </div>
+      <div class="row g-2">
+        
+
+        <div class="col-md-3" *ngFor="let symptom of symptomsList">
+          <button class="btn w-100"
+                  [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
+                  (click)="toggleSymptom(symptom)">
+            {{ symptom }}
+          </button>
+        </div>
+      </div>
+    </div>
+   -->
+   <div class="mb-3">
+    <!-- Search Input -->
+    <input
+      type="text"
+      class="form-control mb-3"
+      placeholder="Search symptom..."
+      [(ngModel)]="searchTerm"
+    />
+  
+    <!-- Symptom List -->
+    <div class="row g-2">
+      <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
+        <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
+          <button class="btn w-100"
+                  [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
+                  (click)="toggleSymptom(symptom)">
+            {{ symptom }}
+          </button>
+        </div>
+      </ng-container>
+    </div>
+  
+    <!-- No Symptoms Found -->
+    <ng-template #noSymptomFound>
+      <div class="text-center text-muted mt-3">
+        <p>😢 Symptom not in the list</p>
+        <small>We’re working on adding more symptoms soon.</small>
+      </div>
+    </ng-template>
+  </div>
+  
+    <div *ngIf="selectedSymptoms.length > 0" class="mt-4">
+      <h5>Selected Symptoms:</h5>
+      <div class="d-flex flex-wrap gap-2">
+        <span *ngFor="let s of selectedSymptoms" class="badge bg-info text-dark px-3 py-2">
+          {{ s }}
+          <button class="btn-close btn-close-white btn-sm ms-2" (click)="removeSymptom(s)"></button>
+        </span>
+      </div>
+  
+      <div class="mt-4">
+        <button class="btn btn-success" (click)="submitSymptoms()">
+        {{ evaluationDone ? 'Re-evaluate' : 'Evaluate' }}
+        </button>
+      </div>
+    </div>
+  </div>
+  
