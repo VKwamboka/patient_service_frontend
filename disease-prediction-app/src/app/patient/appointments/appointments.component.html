@@ -1,1 +1,55 @@
-<p>appointments works!</p>
+<div class="container mt-4">
+    <h4>Appointments</h4>
+  
+    <!-- Booking Form -->
+    <div class="card mb-4 shadow-sm">
+      <div class="card-body">
+        <h5>Book New Appointment</h5>
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <label>Doctor</label>
+            <select class="form-select" [(ngModel)]="selectedDoctor">
+              <option value="">-- Select Doctor --</option>
+              <option *ngFor="let doc of doctors" [value]="doc">{{ doc }}</option>
+            </select>
+          </div>
+          <div class="col-md-6">
+            <label>Time Slot</label>
+            <select class="form-select" [(ngModel)]="selectedTime">
+              <option value="">-- Select Time --</option>
+              <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option>
+            </select>
+          </div>
+        </div>
+        <button class="btn btn-primary mt-3" (click)="bookAppointment()">Book</button>
+  
+        <div *ngIf="successMessage" class="alert alert-success mt-3">
+          {{ successMessage }}
+        </div>
+      </div>
+    </div>
+  
+    <!-- Appointments List -->
+    <div *ngIf="appointments.length > 0; else noAppointments">
+      <h5>My Appointments</h5>
+      <div *ngFor="let appt of appointments; let i = index" class="card mb-3 shadow-sm">
+        <div class="card-body">
+          <h6>{{ appt.doctor }}</h6>
+          <p>🕒 {{ appt.time }}</p>
+          <p>Status: <strong>{{ appt.status }}</strong></p>
+  
+          <button *ngIf="appt.status === 'Active'" class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(i)">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  
+    <!-- No Appointments Message -->
+    <ng-template #noAppointments>
+      <div class="text-muted text-center mt-4">
+        <p>🗓️ You have no appointments at the moment.</p>
+      </div>
+    </ng-template>
+  </div>
+  
