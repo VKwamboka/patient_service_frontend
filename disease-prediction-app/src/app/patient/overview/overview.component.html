@@ -1,0 +1,78 @@
+<div class="container mt-4">
+    <!-- Welcome Message -->
+    <div class="mb-4">
+      <h3>Welcome back, {{ patientName || 'Patient' }} 👋</h3>
+      <p class="text-muted">Today is {{ currentDate | date: 'fullDate' }}</p>
+    </div>
+  
+    <!-- Quick Stats -->
+    <div class="row g-4">
+      <div class="col-md-3">
+        <div class="card shadow-sm border-0 text-center bg-light">
+          <div class="card-body">
+            <i class="bi bi-calendar-check fs-2 text-primary"></i>
+            <h5 class="mt-2">Appointments</h5>
+            <p class="fs-4 fw-bold">{{ appointmentCount }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-3">
+        <div class="card shadow-sm border-0 text-center bg-light">
+          <div class="card-body">
+            <i class="bi bi-clipboard-pulse fs-2 text-success"></i>
+            <h5 class="mt-2">Last Check</h5>
+            <p class="fs-6">{{ lastSymptomCheck || 'No recent check' }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-3">
+        <div class="card shadow-sm border-0 text-center bg-light">
+          <div class="card-body">
+            <i class="bi bi-file-earmark-text fs-2 text-warning"></i>
+            <h5 class="mt-2">Reports</h5>
+            <p class="fs-4 fw-bold">{{ reportCount }}</p>
+          </div>
+        </div>
+      </div>
+  
+      <div class="col-md-3">
+        <div class="card shadow-sm border-0 text-center bg-light">
+          <div class="card-body">
+            <i class="bi bi-bell fs-2 text-danger"></i>
+            <h5 class="mt-2">Alerts</h5>
+            <p class="fs-6">{{ criticalAlert || 'None' }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Upcoming Appointment -->
+    <div class="card mt-4 shadow-sm">
+      <div class="card-header bg-primary text-white">
+        Upcoming Appointment
+      </div>
+      <div class="card-body">
+        <div *ngIf="upcomingAppointment; else noAppointment">
+          <p><strong>Doctor:</strong> {{ upcomingAppointment.doctor }}</p>
+          <p><strong>Date:</strong> {{ upcomingAppointment.date | date:'short' }}</p>
+          <a routerLink="/dashboard/appointments" class="btn btn-outline-primary">Manage</a>
+        </div>
+        <ng-template #noAppointment>
+          <p class="text-muted">No upcoming appointments.</p>
+        </ng-template>
+      </div>
+    </div>
+  
+    <!-- Quick Actions -->
+    <div class="mt-4">
+      <h5>Quick Actions</h5>
+      <div class="d-flex flex-wrap gap-3">
+        <a routerLink="/dashboard/symptoms" class="btn btn-outline-success">Input Symptoms</a>
+        <a routerLink="/dashboard/appointments" class="btn btn-outline-info">Book Appointment</a>
+        <a routerLink="/dashboard/reports" class="btn btn-outline-warning">View Reports</a>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,36 @@
+.sidebar {
+    min-width: 240px;
+    height: 100%;
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar.collapsed {
+    display: none;
+  }
+  
+  .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+  }
+  
+  .dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+  }
+  
+  .dark-mode .bg-light {
+    background-color: #1e1e1e !important;
+  }
+  
+  .dark-mode .text-white {
+    color: #ffffff !important;
+  }
+  
+  .dark-mode .nav-link {
+    color: #e0e0e0 !important;
+  }
+  
+  .dark-mode .nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  

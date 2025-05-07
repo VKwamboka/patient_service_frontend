@@ -19,6 +19,7 @@ export class PatientDashboardComponent implements OnInit {
     { label: 'Overview', route: '/dashboard/overview', icon: 'bi bi-house-door' },
     { label: 'Symptom Input', route: '/dashboard/symptoms', icon: 'bi bi-clipboard-pulse' },
     { label: 'Appointments', route: '/dashboard/appointments', icon: 'bi bi-calendar-check' },
+    {label: 'Doctors', route: '/dashboard/doctors', icon: 'bi bi-person-circle' },
     { label: 'History', route: '/dashboard/history', icon: 'bi bi-clock-history' },
     { label: 'Reports', route: '/dashboard/reports', icon: 'bi bi-file-earmark-text' }
   ];
