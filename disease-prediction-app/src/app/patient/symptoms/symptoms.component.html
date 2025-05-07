@@ -3,34 +3,34 @@
     <p class="text-muted">Choose symptoms from the list below:</p>
 
    <div class="mb-3">
-    <!-- Search Input -->
-    <input
-      type="text"
-      class="form-control mb-3"
-      placeholder="Search symptom..."
-      [(ngModel)]="searchTerm"
-    />
+      <!-- Search Input -->
+      <input
+        type="text"
+        class="form-control mb-3"
+        placeholder="Search symptom..."
+        [(ngModel)]="searchTerm"
+      />
   
-    <!-- Symptom List -->
-    <div class="row g-2">
-      <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
-        <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
-          <button class="btn w-100"
-                  [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
-                  (click)="toggleSymptom(symptom)">
-            {{ symptom }}
-          </button>
-        </div>
-      </ng-container>
-    </div>
-  
-    <!-- No Symptoms Found -->
-    <ng-template #noSymptomFound>
-      <div class="text-center text-muted mt-3">
-        <p>😢 Symptom not in the list</p>
-        <small>We’re working on adding more symptoms soon.</small>
+      <!-- Symptom List -->
+      <div class="row g-2">
+        <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
+          <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
+            <button class="btn w-100"
+                    [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
+                    (click)="toggleSymptom(symptom)">
+              {{ symptom }}
+            </button>
+          </div>
+        </ng-container>
       </div>
-    </ng-template>
+  
+      <!-- No Symptoms Found -->
+      <ng-template #noSymptomFound>
+        <div class="text-center text-muted mt-3">
+          <p>😢 Symptom not in the list</p>
+          <small>We’re working on adding more symptoms soon.</small>
+        </div>
+      </ng-template>
   </div>
   
     <div *ngIf="selectedSymptoms.length > 0" class="mt-4">
@@ -48,5 +48,21 @@
         </button>
       </div>
     </div>
+
+    <!-- Loading Spinner -->
+    <div class="text-center mt-4" *ngIf="loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <p class="mt-2">Evaluating your symptoms...</p>
+    </div>
+
+    <!-- Prediction Result Component -->
+    <app-prediction-result
+      *ngIf="submitted && predictionResult.length"
+      [results]="predictionResult">
+    </app-prediction-result>
+
+
   </div>
   

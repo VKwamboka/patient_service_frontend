@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { PredictionResultComponent } from '../prediction-result/prediction-result.component';
 
 @Component({
   selector: 'app-symptoms',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PredictionResultComponent],
   templateUrl: './symptoms.component.html',
   styleUrl: './symptoms.component.css'
 })
@@ -31,16 +32,39 @@ export class SymptomsComponent {
     this.selectedSymptoms = this.selectedSymptoms.filter(s => s !== symptom);
   }
 
+  // submitting symptoms
+  loading = false;
+  submitted = false;
+  predictionResult: string[] = [];
+
   submitSymptoms() {
-    if(this.selectedSymptoms.length === 0){
+    if (this.selectedSymptoms.length === 0) {
       alert('Please select at least one symptom before submitting.');
       return;
     }
-    this.evaluationDone = true;
-    // TODO: send to API later
-    console.log('Submitted symptoms:', this.selectedSymptoms);
-    alert('Symptoms submitted for evaluation!');
+  
+    this.loading = true;
+    this.submitted = false;
+  
+    // Simulate API delay
+    setTimeout(() => {
+      this.predictionResult = [
+        'Flu (80%)',
+        'Common Cold (65%)',
+        'COVID-19 (45%)'
+      ];
+  
+      this.loading = false;
+      this.submitted = true;
+      this.evaluationDone = true;
+  
+      // Now run alert after loading is done
+      console.log('Submitted symptoms:', this.selectedSymptoms);
+      alert('Symptoms submitted for evaluation!');
+    }, 2000);
   }
+  
+  
 
   // searching
   searchTerm: string = '';
@@ -50,6 +74,8 @@ export class SymptomsComponent {
       symptom.toLowerCase().includes(term)
     );
   }
+
+  
   
 
 }
