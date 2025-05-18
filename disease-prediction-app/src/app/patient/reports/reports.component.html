@@ -1,1 +1,23 @@
-<p>reports works!</p>
+<div class="container mt-4">
+  <h4>My Medical Reports</h4>
+  <p class="text-muted">View and download medical reports provided by your doctors.</p>
+
+  <div *ngIf="reports.length > 0; else noReports">
+    <div *ngFor="let report of reports" class="card mb-3 shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">{{ report.doctor }}</h5>
+        <p class="card-text"><strong>Date:</strong> {{ report.date }}</p>
+        <p class="card-text"><strong>Summary:</strong> {{ report.summary }}</p>
+        <button class="btn btn-outline-primary" (click)="downloadReport(report)">
+          Download Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #noReports>
+    <div class="text-center text-muted mt-5">
+      <p>📭 You have no reports available at the moment.</p>
+    </div>
+  </ng-template>
+</div>

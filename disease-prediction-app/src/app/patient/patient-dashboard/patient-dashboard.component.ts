@@ -2,6 +2,9 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, PLATFORM_ID } from '@angular/core';
+
 
 @Component({
   selector: 'app-patient-dashboard',
@@ -13,7 +16,8 @@ import { FormsModule } from '@angular/forms';
 export class PatientDashboardComponent implements OnInit {
   isSidebarCollapsed = false;
   isMobile = false;
-  theme = localStorage.getItem('theme') || 'light-mode';
+  theme = 'light-mode';
+  // theme = localStorage.getItem('theme') || 'light-mode';
 
   menu = [
     { label: 'Overview', route: '/dashboard/overview', icon: 'bi bi-house-door' },
@@ -23,11 +27,14 @@ export class PatientDashboardComponent implements OnInit {
     { label: 'History', route: '/dashboard/history', icon: 'bi bi-clock-history' },
     { label: 'Reports', route: '/dashboard/reports', icon: 'bi bi-file-earmark-text' }
   ];
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private route: ActivatedRoute) {}
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
-
-  ngOnInit(): void {
+  // constructor(private router: Router, private route: ActivatedRoute) {}
+  ngOnInit() {
     this.checkScreenSize();
+    if (isPlatformBrowser(this.platformId)) {
+      this.theme = localStorage.getItem('theme') || 'light-mode';
+    }
   }
 
  @HostListener('window:resize')
