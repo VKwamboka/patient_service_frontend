@@ -36,28 +36,87 @@ export class AppointmentsComponent implements OnInit {
 
   appointments: Appointment[] = [];
 
-  bookAppointment() {
-    if (this.selectedDoctor && this.selectedTime) {
-      this.appointments.push({
-        doctor: this.selectedDoctor,
-        time: this.selectedTime,
-        status: 'Active',
-      });
+  hasActiveAppointment(doctor: string): boolean {
+  return this.appointments.some(
+    appt => appt.doctor === doctor && appt.status === 'Active'
+  );
+}
 
-      this.successMessage = 'Appointment booked successfully!';
-      this.selectedDoctor = '';
-      this.selectedTime = '';
 
-      // Optional: clear success after delay
-      setTimeout(() => (this.successMessage = ''), 3000);
-    } else {
-      alert('Please select both doctor and time.');
-    }
+  // bookAppointment() {
+  //   if (this.selectedDoctor && this.selectedTime) {
+  //     this.appointments.push({
+  //       doctor: this.selectedDoctor,
+  //       time: this.selectedTime,
+  //       status: 'Active',
+  //     });
+
+  //     this.successMessage = 'Appointment booked successfully!';
+  //     this.selectedDoctor = '';
+  //     this.selectedTime = '';
+
+  //     // Optional: clear success after delay
+  //     setTimeout(() => (this.successMessage = ''), 3000);
+  //   } else {
+  //     alert('Please select both doctor and time.');
+  //   }
+  // }
+bookAppointment() {
+  if (!this.selectedDoctor || !this.selectedTime) {
+    alert('Please select a doctor and a time.');
+    return;
   }
+
+  const existingIndex = this.appointments.findIndex(
+    appt => appt.doctor === this.selectedDoctor && appt.status === 'Active'
+  );
+
+  if (existingIndex >= 0) {
+    // Modify time for existing appointment
+    this.appointments[existingIndex].time = this.selectedTime;
+    this.successMessage = `Appointment with ${this.selectedDoctor} updated to ${this.selectedTime}.`;
+  } else {
+    // Book new appointment
+    this.appointments.push({
+      doctor: this.selectedDoctor,
+      time: this.selectedTime,
+      status: 'Active'
+    });
+    this.successMessage = 'Appointment booked successfully!';
+  }
+
+  // Reset form
+  this.selectedDoctor = '';
+  this.selectedTime = '';
+  setTimeout(() => (this.successMessage = ''), 3000);
+}
 
   cancelAppointment(index: number) {
     this.appointments[index].status = 'Cancelled';
   }
+
+  // reschedulingIndex appointment
+reschedulingIndex: number | null = null;
+newTime: string = '';
+
+reschedule(index: number) {
+  this.reschedulingIndex = index;
+  this.newTime = this.appointments[index].time;
+}
+
+confirmReschedule(index: number) {
+  if (this.newTime) {
+    this.appointments[index].time = this.newTime;
+    this.successMessage = `Appointment with ${this.appointments[index].doctor} updated to ${this.newTime}`;
+    this.reschedulingIndex = null;
+    setTimeout(() => (this.successMessage = ''), 3000);
+  }
+}
+
+cancelReschedule() {
+  this.reschedulingIndex = null;
+}
+
 
 
 }
