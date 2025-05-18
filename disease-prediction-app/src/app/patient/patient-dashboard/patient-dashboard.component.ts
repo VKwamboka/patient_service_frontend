@@ -4,11 +4,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
+import { NotificationsComponent } from "../notifications/notifications.component";
+import { MatIconModule } from '@angular/material/icon';
+
 
 
 @Component({
   selector: 'app-patient-dashboard',
-  imports: [ FormsModule, RouterModule, CommonModule ],
+  imports: [FormsModule, RouterModule, CommonModule, NotificationsComponent, MatIconModule],
   standalone: true,
   templateUrl: './patient-dashboard.component.html',
   styleUrl: './patient-dashboard.component.css'
@@ -22,6 +25,7 @@ export class PatientDashboardComponent implements OnInit {
   menu = [
     { label: 'Overview', route: '/dashboard/overview', icon: 'bi bi-house-door' },
     { label: 'Symptom Input', route: '/dashboard/symptoms', icon: 'bi bi-clipboard-pulse' },
+    // { label: 'Notifications', route: '/dashboard/notifications', icon: 'bi bi-bell' },
     { label: 'Appointments', route: '/dashboard/appointments', icon: 'bi bi-calendar-check' },
     {label: 'Doctors', route: '/dashboard/doctors', icon: 'bi bi-person-circle' },
     { label: 'History', route: '/dashboard/history', icon: 'bi bi-clock-history' },

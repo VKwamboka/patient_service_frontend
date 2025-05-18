@@ -1,0 +1,92 @@
+<!-- Bell Icon + Badge -->
+<div class="position-relative">
+         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" (click)="togglePanel()">
+           
+         </mat-icon>
+          <span
+                *ngIf="unreadCount > 0"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                {{ unreadCount }}
+            </span>
+
+  <!-- <button class="btn btn-outline-secondary" >
+    <i class="bi bi-bell-fill"></i>
+
+    <span
+      *ngIf="unreadCount > 0"
+      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+    >
+      {{ unreadCount }}
+    </span>
+  </button> -->
+
+  <!-- Notification Panel -->
+  <div
+    *ngIf="isPanelOpen"
+    class="card shadow position-absolute end-0 mt-2"
+    style="width: 300px; z-index: 1000;"
+  >
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <span><strong>Notifications</strong></span>
+      <div>
+        <button class="btn btn-sm btn-link" (click)="markAllAsRead()">Mark all as read</button>
+        <button class="btn btn-sm btn-link text-danger" (click)="clearAll()">Clear</button>
+      </div>
+    </div>
+    <ul class="list-group list-group-flush">
+  <li
+    *ngFor="let n of notifications"
+    class="list-group-item"
+    [class.bg-light]="!n.read"
+    (click)="viewNotification(n)"
+    style="cursor: pointer;"
+  >
+    <small>{{ n.message }}</small>
+    <div class="text-muted small">{{ n.time }}</div>
+  </li>
+  <li *ngIf="notifications.length === 0" class="list-group-item text-center text-muted">
+    No new notifications
+  </li>
+</ul>
+<!-- Modal -->
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  role="dialog"
+  *ngIf="selectedNotification"
+  style="background-color: rgba(0, 0, 0, 0.5); z-index: 1050;"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Notification</h5>
+        <button type="button" class="btn-close" (click)="closeModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ selectedNotification.fullMessage }}</p>
+        <div class="text-muted small mt-3">{{ selectedNotification.time }}</div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+    <!-- <ul class="list-group list-group-flush">
+      <li
+        *ngFor="let n of notifications"
+        class="list-group-item"
+        [class.bg-light]="!n.read"
+      >
+        <small>{{ n.message }}</small>
+        <div class="text-muted small">{{ n.time }}</div>
+      </li>
+      <li *ngIf="notifications.length === 0" class="list-group-item text-center text-muted">
+        No new notifications
+      </li>
+    </ul> -->
+  </div>
+</div>

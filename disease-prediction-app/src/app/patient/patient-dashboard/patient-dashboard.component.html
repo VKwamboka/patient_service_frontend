@@ -7,9 +7,15 @@
   
       <span class="fw-semibold">Patient Portal</span>
   
-      <button class="btn btn-outline-secondary" (click)="toggleTheme()">
+      <!-- <button class="btn btn-outline-secondary" (click)="toggleTheme()">
         <i [ngClass]="theme === 'dark-mode' ? 'bi bi-moon-fill' : 'bi bi-sun-fill'"></i>
-      </button>
+      </button> -->
+      <nav class="d-flex justify-content-end ">
+        <app-notifications></app-notifications>
+      </nav>
+      
+
+      
     </header>
   
     <div class="d-flex flex-grow-1">

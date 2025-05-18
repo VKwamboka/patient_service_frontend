@@ -13,6 +13,7 @@ export const routes: Routes = [
         component: PatientDashboardComponent,
         children: [
           { path: 'overview', loadComponent: () => import('./patient/overview/overview.component').then(m => m.OverviewComponent) },
+          {path: 'notifications', loadComponent: () => import('./patient/notifications/notifications.component').then(m => m.NotificationsComponent) },
           { path: 'symptoms', loadComponent: () => import('./patient/symptoms/symptoms.component').then(m => m.SymptomsComponent) },
           { path: 'appointments', loadComponent: () => import('./patient/appointments/appointments.component').then(m => m.AppointmentsComponent) },
           {path: 'doctors', loadComponent: () => import('./patient/doctors/doctors.component').then(m => m.DoctorsComponent) },
