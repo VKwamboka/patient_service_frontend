@@ -1,6 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 :root {
     --bs-primary: #2596BE;
+    --bs-secondary: #072431;
+    --bs-success: #2596BE;
   }
 
   .btn-primary {
@@ -16,6 +18,22 @@
   }
   .bg-primary {
     background-color: var(--bs-primary) !important;
+  }
+  .bg-secondary {
+    background-color: #072431 !important;
+  }
+  .bg-success {
+    background-color: #072431 !important;
+    border-color: #072431 !important;
+  }
+  .btn-success{
+    background-color: var(--bs-primary) !important;
+    border-color: var(--bs-primary) !important;
+  }
+  .bg-info{
+    background-color: #072431 !important;
+    border-color: #072431!important;
+    color: #ffffff !important;
   }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
