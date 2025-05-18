@@ -1,6 +1,8 @@
 <!-- Bell Icon + Badge -->
-<div class="position-relative">
-         <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="home" (click)="togglePanel()">
+<div class="position-relative notifications" >
+
+    <div (click)="togglePanel(); $event.stopPropagation()">
+        <mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="notifications" >
            
          </mat-icon>
           <span
@@ -9,6 +11,9 @@
                 >
                 {{ unreadCount }}
             </span>
+    </div>
+
+         
 
   <!-- <button class="btn btn-outline-secondary" >
     <i class="bi bi-bell-fill"></i>

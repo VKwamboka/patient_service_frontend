@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, HostListener } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {MatIconModule} from '@angular/material/icon';
 
@@ -18,6 +18,8 @@ interface Notification {
   styleUrl: './notifications.component.css'
 })
 export class NotificationsComponent {
+    constructor(private elementRef: ElementRef) {}
+
   notifications: Notification[] = [
   {
     id: 1,
@@ -51,6 +53,15 @@ export class NotificationsComponent {
 
   togglePanel() {
     this.isPanelOpen = !this.isPanelOpen;
+  }
+
+  // Detect clicks outside the component
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    const clickedInside = this.elementRef.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.isPanelOpen = false;
+    }
   }
 
   markAllAsRead() {
