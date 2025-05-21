@@ -19,6 +19,14 @@
               <option value="">-- Select Time --</option>
               <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option>
             </select>
+            
+            <!-- <mat-form-field class="example-full-width">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field> -->
           </div>
         </div>
         <button class="btn btn-primary mt-3" (click)="bookAppointment()">Book</button>

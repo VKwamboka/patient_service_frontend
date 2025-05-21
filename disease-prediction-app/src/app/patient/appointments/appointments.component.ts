@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import {provideNativeDateAdapter} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
 
 
 interface Appointment {
@@ -12,7 +16,9 @@ interface Appointment {
 
 @Component({
   selector: 'app-appointments',
-  imports: [CommonModule, FormsModule],
+  providers: [provideNativeDateAdapter()],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './appointments.component.html',
   styleUrl: './appointments.component.css'
 })
@@ -20,6 +26,10 @@ export class AppointmentsComponent implements OnInit {
   selectedDoctor = '';
   selectedTime = '';
   successMessage = '';
+
+  private readonly _currentYear = new Date().getFullYear();
+  readonly minDate = new Date(this._currentYear - 0, 1, 0);
+  readonly maxDate = new Date(this._currentYear + 0, 11, 31);
 
   constructor(private route: ActivatedRoute) {}
 
