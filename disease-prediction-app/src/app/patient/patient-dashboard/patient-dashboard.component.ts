@@ -6,6 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { Inject, PLATFORM_ID } from '@angular/core';
 import { NotificationsComponent } from "../notifications/notifications.component";
 import { MatIconModule } from '@angular/material/icon';
+import { AuthService } from '../../services/auth.service';
 
 
 
@@ -31,7 +32,7 @@ export class PatientDashboardComponent implements OnInit {
     { label: 'History', route: '/dashboard/patient/history', icon: 'bi bi-clock-history' },
     { label: 'Reports', route: '/dashboard/patient/reports', icon: 'bi bi-file-earmark-text' }
   ];
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private route: ActivatedRoute) {}
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
   // constructor(private router: Router, private route: ActivatedRoute) {}
   ngOnInit() {
@@ -54,6 +55,10 @@ toggleSidebar() {
 toggleTheme() {
   this.theme = this.theme === 'dark-mode' ? 'light-mode' : 'dark-mode';
   localStorage.setItem('theme', this.theme);
+}
+
+onLogout() {
+  this.auth.logout()
 }
 
 }

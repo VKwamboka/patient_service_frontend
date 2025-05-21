@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 export interface SignupPayload {
   email: string;
@@ -21,7 +22,7 @@ export interface SignupPayload {
 export class AuthService {
   private readonly BASE_URL = 'http://localhost:3005/api/users'; 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   signup(payload: SignupPayload) {
     return this.http.post(`${this.BASE_URL}/signup`, payload).pipe(
@@ -45,6 +46,13 @@ export class AuthService {
   }
 
   return throwError(() => new Error(message));
+}
+
+logout(){
+  localStorage.removeItem('token');
+  console.log('Logged out successfully');
+  this.router.navigate(['/login/patient']);
+  
 }
 
 }
