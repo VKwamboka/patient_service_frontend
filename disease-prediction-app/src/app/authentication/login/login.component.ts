@@ -46,26 +46,7 @@ export class LoginComponent {
     }
 
     this.loading = true;
-    // this.authService.login(this.user.email, this.user.password).subscribe({
-    //   next: (res: any) => {
-    //     console.log('Login successful:', res);
-
-    //     // optionally save token
-    //     if (res.token) {
-    //       localStorage.setItem('token', res.token);
-    //     }
-
-    //     this.errorMessage = '';
-    //     this.loading = false;
-
-    //     // redirect based on role (optional)
-    //     this.router.navigate(['/dashboard']);
-    //   },
-    //   error: (err) => {
-    //     this.errorMessage = err.message || 'Login failed.';
-    //     this.loading = false;
-    //   }
-    // });
+   
     this.authService.login(this.user.email, this.user.password).subscribe({
     next: (res: any) => {
       localStorage.setItem('token', res.token);

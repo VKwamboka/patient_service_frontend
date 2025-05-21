@@ -11,12 +11,7 @@ import { AuthService, SignupPayload } from '../../services/auth.service';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  // user = {
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   confirmPassword: '',
-  // };
+ 
   userData: SignupPayload = {
     email: '',
     password: '',
@@ -25,14 +20,14 @@ export class RegisterComponent {
       firstName: '',
       lastName: '',
       username: '',
-      isPatient: true,  // default role
+      isPatient: true,  
       isDoctor: false,
       profilePicture: ''
     }
   };
 
 
-  role: string = 'patient'; // Default role
+  role: string = 'patient'; 
   
   constructor(private route: ActivatedRoute, private router: Router, private authService: AuthService ) {}
   loading = false;
@@ -65,13 +60,6 @@ export class RegisterComponent {
     this.userData.profile.isDoctor = this.role === 'doctor';
   }
 
-  // onSubmit() {
-  //   this.authService.signup(this.userData).subscribe({
-  //     next: () => console.log('Signup success'),
-  //     error: (err) => console.error('Signup failed', err),
-  //   });
-  // }
-
  
   // submitting the form
   onSubmit(form: NgForm) {
@@ -89,20 +77,12 @@ export class RegisterComponent {
     }
     });
     console.log('Form submitted:', form.value);
-    // this.router.navigate([`/login/${this.role}`]);
   }
 
   clearError(){
     this.errorMessage = '';
   }
 
-  //  onSignup(form: NgForm): void {
-  //   if (form.invalid) return;
-
-  //   console.log('User Signed Up:', this.user);
-
-  //   this.router.navigate(['/login']);
-  // }
 
 }
 
