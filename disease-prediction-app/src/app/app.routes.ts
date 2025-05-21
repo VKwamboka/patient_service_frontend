@@ -4,6 +4,7 @@ import { LoginComponent } from './authentication/login/login.component';
 import { RegisterComponent } from './authentication/register/register.component';
 import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
 import { authGuard } from './guards/auth.guard';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 export const routes: Routes = [
     { path: '', component: LandingComponent },
@@ -23,5 +24,6 @@ export const routes: Routes = [
           { path: '', redirectTo: 'overview', pathMatch: 'full' },
         ]
       },
+    {path: '**', component: PageNotFoundComponent}
 
 ];
