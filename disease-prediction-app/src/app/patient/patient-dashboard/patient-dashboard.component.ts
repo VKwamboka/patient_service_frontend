@@ -23,13 +23,13 @@ export class PatientDashboardComponent implements OnInit {
   // theme = localStorage.getItem('theme') || 'light-mode';
 
   menu = [
-    { label: 'Overview', route: '/dashboard/overview', icon: 'bi bi-house-door' },
-    { label: 'Symptom Input', route: '/dashboard/symptoms', icon: 'bi bi-clipboard-pulse' },
+    { label: 'Overview', route: '/dashboard/patient/overview', icon: 'bi bi-house-door' },
+    { label: 'Symptom Input', route: '/dashboard/patient/symptoms', icon: 'bi bi-clipboard-pulse' },
     // { label: 'Notifications', route: '/dashboard/notifications', icon: 'bi bi-bell' },
-    { label: 'Appointments', route: '/dashboard/appointments', icon: 'bi bi-calendar-check' },
-    {label: 'Doctors', route: '/dashboard/doctors', icon: 'bi bi-person-circle' },
-    { label: 'History', route: '/dashboard/history', icon: 'bi bi-clock-history' },
-    { label: 'Reports', route: '/dashboard/reports', icon: 'bi bi-file-earmark-text' }
+    { label: 'Appointments', route: '/dashboard/patient/appointments', icon: 'bi bi-calendar-check' },
+    {label: 'Doctors', route: '/dashboard/patient/doctors', icon: 'bi bi-person-circle' },
+    { label: 'History', route: '/dashboard/patient/history', icon: 'bi bi-clock-history' },
+    { label: 'Reports', route: '/dashboard/patient/reports', icon: 'bi bi-file-earmark-text' }
   ];
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private route: ActivatedRoute) {}
 
