@@ -9,7 +9,7 @@ export const routes: Routes = [
     { path: 'login/:role', component: LoginComponent },
     { path: 'registration/:role', component: RegisterComponent },
     {
-        path: 'dashboard',
+        path: 'dashboard/patient',
         component: PatientDashboardComponent,
         children: [
           { path: 'overview', loadComponent: () => import('./patient/overview/overview.component').then(m => m.OverviewComponent) },

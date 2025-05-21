@@ -2,6 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
+
+
 
 @Component({
   selector: 'app-login',
@@ -11,7 +14,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent {
   role: string = 'patient'; // Default role
-  constructor(private router: Router, private route: ActivatedRoute){}
+  user ={
+    email: '',
+    password: ''
+  }
+  loading = false;
+  errorMessage = '';
+  successMessage = '';
+
+  constructor(private router: Router, private route: ActivatedRoute, private authService: AuthService){}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
@@ -28,12 +39,50 @@ export class LoginComponent {
     this.router.navigate([`/registration/${this.role}`]);
   }
 
-  user = {
-    email: '',
-    password: ''
-  };
+  onLogin() {
+    if (!this.user.email || !this.user.password) {
+      this.errorMessage = 'Please enter both email and password.';
+      return;
+    }
 
-  onSubmit() {
-    console.log('Form submitted:', this.user);
+    this.loading = true;
+    // this.authService.login(this.user.email, this.user.password).subscribe({
+    //   next: (res: any) => {
+    //     console.log('Login successful:', res);
+
+    //     // optionally save token
+    //     if (res.token) {
+    //       localStorage.setItem('token', res.token);
+    //     }
+
+    //     this.errorMessage = '';
+    //     this.loading = false;
+
+    //     // redirect based on role (optional)
+    //     this.router.navigate(['/dashboard']);
+    //   },
+    //   error: (err) => {
+    //     this.errorMessage = err.message || 'Login failed.';
+    //     this.loading = false;
+    //   }
+    // });
+    this.authService.login(this.user.email, this.user.password).subscribe({
+    next: (res: any) => {
+      localStorage.setItem('token', res.token);
+      this.router.navigate([`/dashboard/${this.role}`]);
+      this.loading = false;
+    },
+    error: (err: Error) => {
+      this.errorMessage = err.message || 'Login failed.'; 
+      this.loading = false;
+    }
+  });
   }
+
+  clearError(){
+    this.errorMessage = '';
+  }
+
+
+  
 }
