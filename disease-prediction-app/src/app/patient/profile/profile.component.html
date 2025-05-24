@@ -1,0 +1,35 @@
+<div class="container mt-4">
+  <h4>My Profile</h4>
+  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label>First Name</label>
+        <input type="text" class="form-control" name="firstName"
+               [(ngModel)]="profile.firstName" required />
+      </div>
+      <div class="col-md-6">
+        <label>Last Name</label>
+        <input type="text" class="form-control" name="lastName"
+               [(ngModel)]="profile.lastName" required />
+      </div>
+      <div class="col-md-6">
+        <label>Username</label>
+        <input type="text" class="form-control" name="username"
+               [(ngModel)]="profile.username" />
+      </div>
+      <div class="col-md-6">
+        <label>Phone Number</label>
+        <input type="text" class="form-control" name="phone"
+               [(ngModel)]="profile.phoneNumber" />
+      </div>
+      <div class="col-md-12">
+        <label>Email (readonly)</label>
+        <input type="email" class="form-control" name="email"
+               [(ngModel)]="profile.email" readonly />
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+  </form>
+</div>

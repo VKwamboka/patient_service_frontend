@@ -21,6 +21,7 @@ export const routes: Routes = [
           {path: 'doctors', loadComponent: () => import('./patient/doctors/doctors.component').then(m => m.DoctorsComponent), canActivate: [authGuard] },
           { path: 'history', loadComponent: () => import('./patient/history/history.component').then(m => m.HistoryComponent), canActivate: [authGuard] },
           { path: 'reports', loadComponent: () => import('./patient/reports/reports.component').then(m => m.ReportsComponent), canActivate: [authGuard] },
+          {path: "profile", loadComponent: () => import('./patient/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authGuard] },
           { path: '', redirectTo: 'overview', pathMatch: 'full' },
         ]
       },

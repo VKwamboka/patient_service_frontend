@@ -30,7 +30,8 @@ export class PatientDashboardComponent implements OnInit {
     { label: 'Appointments', route: '/dashboard/patient/appointments', icon: 'bi bi-calendar-check' },
     {label: 'Doctors', route: '/dashboard/patient/doctors', icon: 'bi bi-person-circle' },
     { label: 'History', route: '/dashboard/patient/history', icon: 'bi bi-clock-history' },
-    { label: 'Reports', route: '/dashboard/patient/reports', icon: 'bi bi-file-earmark-text' }
+    { label: 'Reports', route: '/dashboard/patient/reports', icon: 'bi bi-file-earmark-text' },
+    { label: 'My profile', route: '/dashboard/patient/profile', icon: 'bi bi-person' },
   ];
   constructor(@Inject(PLATFORM_ID) private platformId: Object, private router: Router, private route: ActivatedRoute, private auth: AuthService) {}
 
