@@ -9,6 +9,7 @@
         class="form-control"
         placeholder="Search by name or specialty..."
         [(ngModel)]="searchTerm"
+        (ngModelChange)="filterDoctors()"
       />
     </div>
   
@@ -17,11 +18,11 @@
         <div class="col-md-4" *ngFor="let doc of filteredDoctors">
           <div class="card shadow-sm h-100">
             <div class="card-body">
-              <h5 class="card-title">{{ doc.name }}</h5>
-              <h6 class="card-subtitle mb-2 text-muted">{{ doc.specialty }}</h6>
+              <h5 class="card-title">{{ doc.profile.firstName }} {{ doc.profile.lastName }}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">{{ doc.profile.specialization }}</h6>
               <p class="card-text">
                 📧 {{ doc.email }}<br />
-                📞 {{ doc.phone }}
+                📞 {{ doc.profile.phoneNumber }}
               </p>
               <button class="btn btn-outline-primary" (click)="bookAppointment(doc)">
                 Book Appointment
