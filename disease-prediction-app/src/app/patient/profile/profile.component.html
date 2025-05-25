@@ -1,35 +1,54 @@
 <div class="container mt-4">
-  <h4>My Profile</h4>
-  <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
-    <div class="row g-3">
-      <div class="col-md-6">
-        <label>First Name</label>
-        <input type="text" class="form-control" name="firstName"
-               [(ngModel)]="profile.firstName" required />
-      </div>
-      <div class="col-md-6">
-        <label>Last Name</label>
-        <input type="text" class="form-control" name="lastName"
-               [(ngModel)]="profile.lastName" required />
-      </div>
-      <div class="col-md-6">
-        <label>Username</label>
-        <input type="text" class="form-control" name="username"
-               [(ngModel)]="profile.username" />
-      </div>
-      <div class="col-md-6">
-        <label>Phone Number</label>
-        <input type="text" class="form-control" name="phone"
-               [(ngModel)]="profile.phoneNumber" />
-      </div>
-      <div class="col-md-12">
-        <label>Email (readonly)</label>
-        <input type="email" class="form-control" name="email"
-               [(ngModel)]="profile.email" readonly />
-      </div>
+  <div class="d-flex align-items-center gap-4 mb-4">
+    <!-- Profile Picture or Icon -->
+    <div class="profile-picture">
+      <img *ngIf="profile.profilePicture; else noPic" [src]="profile.profilePicture" alt="Profile Picture" class="rounded-circle" />
+      <ng-template #noPic>
+        <!-- <mat-icon class="mat-icon-lg">account_circle</mat-icon> -->
+        <mat-icon class="mat-icon-lg" aria-hidden="false"   fontIcon="person"></mat-icon>
+
+      </ng-template>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
-    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
-  </form>
+    <!-- Name + Edit Button -->
+    <div>
+      <h4>{{ profile.firstName }} {{ profile.lastName }}</h4>
+      <p class="text-muted">{{ profile.username }}</p>
+    </div>
+
+    <div class="ms-auto">
+      <button mat-button class="primary" (click)="toggleEdit()">
+        <mat-icon>{{ editMode ? 'save' : 'edit' }}</mat-icon>
+        {{ editMode ? 'Save' : 'Edit' }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Profile Info -->
+  <div class="row g-3">
+    <div class="col-md-6">
+      <label>Email:</label>
+      <p class="form-control-plaintext">{{ profile.email }}</p>
+    </div>
+
+    <div class="col-md-6">
+      <label>Phone Number:</label>
+      <ng-container *ngIf="!editMode; else editPhone">
+        <p class="form-control-plaintext">{{ profile.phoneNumber || 'N/A' }}</p>
+      </ng-container>
+      <ng-template #editPhone>
+        <input type="text" [(ngModel)]="profile.phoneNumber" class="form-control" />
+      </ng-template>
+    </div>
+
+    <div class="col-md-6">
+      <label>Username:</label>
+      <ng-container *ngIf="!editMode; else editUsername">
+        <p class="form-control-plaintext">{{ profile.username }}</p>
+      </ng-container>
+      <ng-template #editUsername>
+        <input type="text" [(ngModel)]="profile.username" class="form-control" />
+      </ng-template>
+    </div>
+  </div>
 </div>

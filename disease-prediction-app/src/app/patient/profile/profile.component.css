@@ -1,0 +1,29 @@
+.profile-picture img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+}
+
+.mat-icon-lg {
+  /* font-size: 60px; */
+  width: 80px;
+  height: 80px;
+  color: #2596BE;
+  font-size: 40px;
+}
+
+.snackbar-success {
+  background-color: #4caf50;
+  color: white;
+}
+.snackbar-error {
+  background-color: #f44336;
+  color: white;
+}
+.primary{
+    background-color: #2596BE;
+    color: white;
+    border: #2596BE solid 1px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    border-radius: 5px;
+}
