@@ -39,7 +39,7 @@ export class DoctorsComponent implements OnInit {
         this.filteredDoctors = this.doctors;
         this.currentPage = res.pagination.currentPage;
         this.totalPages = res.pagination.totalPages;
-        console.log(this.doctors[0].profile.firstName);
+        console.log(this.doctors);
       },
       error: (err) => {
         console.error(err.message);

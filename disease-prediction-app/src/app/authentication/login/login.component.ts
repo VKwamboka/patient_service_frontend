@@ -50,8 +50,11 @@ export class LoginComponent {
     this.authService.login(this.user.email, this.user.password).subscribe({
     next: (res: any) => {
       console.log(res)
-      localStorage.setItem('token', res.token);
+      localStorage.setItem('token', res.accessToken);
       localStorage.setItem('userId', res.profile.userId);
+      localStorage.setItem('userEmail', res.email);
+      localStorage.setItem('user', res.profile.firstName);
+
       this.router.navigate([`/dashboard/${this.role}`]);
       this.loading = false;
     },

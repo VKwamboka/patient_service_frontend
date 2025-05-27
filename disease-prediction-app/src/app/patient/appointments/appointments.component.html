@@ -6,27 +6,30 @@
       <div class="card-body">
         <h5>Book New Appointment</h5>
         <div class="row g-3 mt-2">
-          <div class="col-md-6">
+          <div class="col-md-5">
             <label>Doctor</label>
-            <select class="form-select" [(ngModel)]="selectedDoctor">
+            <select class="form-select" [(ngModel)]="selectedDoctorId" (ngModelChange)="updateSelectedDoctor()">
               <option value="">-- Select Doctor --</option>
-              <option *ngFor="let doc of doctors" [value]="doc">{{ doc }}</option>
+              <option *ngFor="let doc of doctors" [value]="doc.id">{{ doc.profile.firstName }} {{ doc.profile.lastName }}</option>
             </select>
           </div>
-          <div class="col-md-6">
-            <label>Time Slot</label>
+          <div class="col-md-4">
+            
+            <mat-form-field class="w-100" >
+                <mat-label>Choose a date</mat-label>
+                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="selectedDate" />
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <!-- TIME picker -->
+          <div class="col-md-2">
+            <label>Select Time</label>
             <select class="form-select" [(ngModel)]="selectedTime">
               <option value="">-- Select Time --</option>
               <option *ngFor="let time of availableTimes" [value]="time">{{ time }}</option>
             </select>
-            
-            <!-- <mat-form-field class="example-full-width">
-                <mat-label>Choose a date</mat-label>
-                <input matInput [min]="minDate" [max]="maxDate" [matDatepicker]="picker" />
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field> -->
           </div>
         </div>
         <button class="btn btn-primary mt-3" (click)="bookAppointment()">Book</button>
@@ -36,19 +39,49 @@
         </div>
       </div>
     </div>
+
+    
   
     <!-- Appointments List -->
-    <div *ngIf="appointments.length > 0; else noAppointments">
+    <div *ngIf="appointments.length > 0 && doctorMapReady; else noAppointments">
       <h5>My Appointments</h5>
       <div *ngFor="let appt of appointments; let i = index" class="card mb-3 shadow-sm">
         <div class="card-body">
-          <h6>{{ appt.doctor }}</h6>
-          <p>🕒 {{ appt.time }}</p>
-          <p>Status: <strong>{{ appt.status }}</strong></p>
-  
-          <button *ngIf="appt.status === 'Active'" class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(i)">
-            Cancel
-          </button>
+          <h6>{{ doctorMap[appt.doctorId] }}</h6>
+          <p>📅 {{ appt.appointmentStartDate | date: 'fullDate' }}</p>
+          <p>🕒 {{ appt.appointmentStartDate | date: 'shortTime' }}</p>
+          <!-- <p>Status: <strong>{{ appt.status }}</strong></p> -->
+           <div class="d-flex gap-2">
+              <button class="btn btn-outline-primary btn-sm" (click)="editAppointment(appt)">
+                Modify Appointment
+              </button>
+              <button class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(appt.id)">
+                Cancel Appointment
+              </button>
+            </div>
+
+           <!-- Inline modify form -->
+          <div *ngIf="editModeId === appt.id" class="mt-2">
+              <mat-form-field class="me-2">
+                <mat-label>New Date</mat-label>
+                <input matInput [matDatepicker]="newDatePicker" [(ngModel)]="editDate">
+                <mat-datepicker-toggle matSuffix [for]="newDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #newDatePicker></mat-datepicker>
+              </mat-form-field>
+
+              <select class="form-select w-auto d-inline" [(ngModel)]="editTime">
+                <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
+              </select>
+
+              <button class="btn btn-success btn-sm ms-2" (click)="confirmEdit(appt.id)">
+                Save
+              </button>
+              <button class="btn btn-secondary btn-sm ms-2" (click)="cancelEdit()">
+                Cancel
+              </button>
+          </div>
+
+           
         </div>
       </div>
     </div>

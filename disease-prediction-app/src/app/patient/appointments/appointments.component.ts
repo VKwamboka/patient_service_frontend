@@ -6,13 +6,18 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import { DoctorService } from '../../services/doctors.service';
+import { Doctor } from '../../services/doctors.service';
+import { AppointmentService } from '../../services/appointment.service';
+import { Appointment } from '../../services/appointment.service';
+import { AuthService } from '../../services/auth.service';
 
 
-interface Appointment {
-  doctor: string;
-  time: string;
-  status: 'Active' | 'Past' | 'Cancelled';
-}
+// interface Appointment {
+//   doctor: string;
+//   time: string;
+//   status: 'Active' | 'Past' | 'Cancelled';
+// }
 
 @Component({
   selector: 'app-appointments',
@@ -23,108 +28,191 @@ interface Appointment {
   styleUrl: './appointments.component.css'
 })
 export class AppointmentsComponent implements OnInit {
-  selectedDoctor = '';
-  selectedTime = '';
+  doctors: Doctor[] = [];
+  // appointments: Appointment[] = [];
+  appointments: any[] = [];
+  selectedDoctorId: string = '';
+  selectedDoctor: any = null;
+  selectedDate: Date | null = null;        
+  selectedTime: string = '';  
   successMessage = '';
 
-  private readonly _currentYear = new Date().getFullYear();
-  readonly minDate = new Date(this._currentYear - 0, 1, 0);
-  readonly maxDate = new Date(this._currentYear + 0, 11, 31);
+  doctorMap: { [id: string]: string } = {};
+  doctorMapReady = false;
 
-  constructor(private route: ActivatedRoute) {}
+  editModeId: string | null = null;
+  editDate: Date | null = null;
+  editTime: string = '';
 
-  ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      if (params['doctor']) {
-        this.selectedDoctor = params['doctor'];
-      }
-    });
+    // Start editing
+  editAppointment(appt: any) {
+    this.editModeId = appt.id;
+    this.editDate = new Date(appt.appointmentStartDate);
+    const dateObj = new Date(appt.appointmentStartDate);
+    this.editTime = `${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
   }
 
-  doctors = ['Dr. Jane Doe', 'Dr. John Smith', 'Dr. Alice Brown'];
-  availableTimes = ['09:00 AM', '11:00 AM', '02:00 PM', '04:30 PM'];
+  // Cancel editing
+  cancelEdit() {
+    this.editModeId = null;
+    this.editDate = null;
+    this.editTime = '';
+  }
 
-  appointments: Appointment[] = [];
 
-  hasActiveAppointment(doctor: string): boolean {
-  return this.appointments.some(
-    appt => appt.doctor === doctor && appt.status === 'Active'
-  );
+
+  availableTimes: string[] = [
+  '09:00', '09:30',
+  '10:00', '10:30',
+  '11:00', '11:30',
+  '12:00', '12:30',
+  '13:00', '13:30',
+  '14:00', '14:30',
+  '15:00', '15:30',
+  '16:00', '16:30',
+];
+
+// Confirm edit and send to backend
+confirmEdit(appointmentId: string) {
+  if (!this.editDate || !this.editTime) return;
+
+  const [h, m] = this.editTime.split(':').map(Number);
+  const newStart = new Date(this.editDate);
+  newStart.setHours(h, m, 0, 0);
+  const newEnd = new Date(newStart.getTime() + 30 * 60 * 1000);
+
+  this.appointmentService.updateAppointment(appointmentId, {
+    appointmentStartDate: newStart.toISOString(),
+    appointmentEndDate: newEnd.toISOString()
+  }).subscribe({
+    next: () => {
+      this.cancelEdit();
+      this.fetchAppointments();
+    },
+    error: err => {
+      console.error(err);
+      alert('Failed to update appointment.');
+    }
+  });
 }
 
 
-  // bookAppointment() {
-  //   if (this.selectedDoctor && this.selectedTime) {
-  //     this.appointments.push({
-  //       doctor: this.selectedDoctor,
-  //       time: this.selectedTime,
-  //       status: 'Active',
-  //     });
+  // private readonly _currentYear = new Date().getFullYear();
+  readonly minDate: Date = new Date(); 
+  readonly maxDate: Date = new Date(new Date().setMonth(new Date().getMonth() + 6));
 
-  //     this.successMessage = 'Appointment booked successfully!';
-  //     this.selectedDoctor = '';
-  //     this.selectedTime = '';
+  constructor(private route: ActivatedRoute, private doctorService: DoctorService, private authService: AuthService, private appointmentService:AppointmentService) {}
 
-  //     // Optional: clear success after delay
-  //     setTimeout(() => (this.successMessage = ''), 3000);
-  //   } else {
-  //     alert('Please select both doctor and time.');
-  //   }
-  // }
-bookAppointment() {
-  if (!this.selectedDoctor || !this.selectedTime) {
-    alert('Please select a doctor and a time.');
+  ngOnInit(): void {
+    this.fetchDoctors();
+    this.fetchAppointments();
+    // this.route.queryParams.subscribe(params => {
+    //   if (params['doctor']) {
+    //     this.selectedDoctor.id = params['doctor'];
+    //   }
+    // });
+  }
+
+
+  fetchDoctors() {
+  this.doctorService.getDoctors().subscribe({
+    next: (res) => {
+      this.doctors = res.data;
+
+      // lookup map for doctor names
+      this.doctorMap = {};
+      this.doctors.forEach(doc => {
+        this.doctorMap[doc.id] = `${doc.profile.firstName} ${doc.profile.lastName}`;
+      });
+      this.doctorMapReady = true;
+
+      console.log('Doctor map:', this.doctorMap);
+    },
+    error: (err) => {
+      console.error(err.message);
+    }
+  });
+}
+
+  updateSelectedDoctor() {
+    if (!this.doctors?.length || !this.selectedDoctorId) return;
+
+    this.selectedDoctor = this.doctors.find(doc => doc.id == this.selectedDoctorId);
+
+    if (!this.selectedDoctor) {
+      console.warn('No doctor matched with ID:', this.selectedDoctorId);
+    } else {
+      console.log('Selected doctor:', this.selectedDoctorId);
+    }
+  }
+
+ 
+
+  // fetch appointments
+  fetchAppointments(){
+    const patientId = localStorage.getItem('userId');
+    if (!patientId) return;
+    this.appointmentService.getAppointments(  ).subscribe({
+     next: (res) => {
+        this.appointments = res.data;
+        console.log('Fetched appointments:', this.appointments);
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
+
+  }
+
+  // book appointment
+  bookAppointment() {
+  if (!this.selectedDoctorId || !this.selectedDate || !this.selectedTime) {
+    alert('Please select a doctor, date, and time.');
     return;
   }
 
-  const existingIndex = this.appointments.findIndex(
-    appt => appt.doctor === this.selectedDoctor && appt.status === 'Active'
-  );
+  // Combine date and time 
+  const [hours, minutes] = this.selectedTime.split(':').map(Number);
+  const start = new Date(this.selectedDate);
+  start.setHours(hours, minutes, 0, 0);
 
-  if (existingIndex >= 0) {
-    // Modify time for existing appointment
-    this.appointments[existingIndex].time = this.selectedTime;
-    this.successMessage = `Appointment with ${this.selectedDoctor} updated to ${this.selectedTime}.`;
-  } else {
-    // Book new appointment
-    this.appointments.push({
-      doctor: this.selectedDoctor,
-      time: this.selectedTime,
-      status: 'Active'
+  const end = new Date(start.getTime() + 30 * 60 * 1000); // add 30 mins
+
+  const appointmentData: Appointment = {
+    patientId: localStorage.getItem('userId') || '',
+    doctorId: this.selectedDoctorId,
+    appointmentStartDate: start.toISOString(),
+    appointmentEndDate: end.toISOString()
+  };
+
+  console.log('Appointment:', appointmentData);
+
+  this.appointmentService.createAppointment(appointmentData).subscribe({
+    next: (res) => {
+      this.successMessage = 'Appointment booked successfully!';
+      this.fetchAppointments();
+      setTimeout(() => (this.successMessage = ''), 3000);
+    },
+    error: (err) => {
+      console.error('Booking error:', err.message);
+      alert('Failed to book appointment. Please try again.');
+    }
+  });
+}
+
+
+cancelAppointment(appointmentId: string) {
+  if (confirm('Are you sure you want to cancel this appointment?')) {
+    this.appointmentService.deleteAppointment(appointmentId).subscribe({
+      next: () => {
+        this.fetchAppointments();
+      },
+      error: err => {
+        console.error(err);
+        alert('Failed to cancel appointment.');
+      }
     });
-    this.successMessage = 'Appointment booked successfully!';
   }
-
-  // Reset form
-  this.selectedDoctor = '';
-  this.selectedTime = '';
-  setTimeout(() => (this.successMessage = ''), 3000);
-}
-
-  cancelAppointment(index: number) {
-    this.appointments[index].status = 'Cancelled';
-  }
-
-  // reschedulingIndex appointment
-reschedulingIndex: number | null = null;
-newTime: string = '';
-
-reschedule(index: number) {
-  this.reschedulingIndex = index;
-  this.newTime = this.appointments[index].time;
-}
-
-confirmReschedule(index: number) {
-  if (this.newTime) {
-    this.appointments[index].time = this.newTime;
-    this.successMessage = `Appointment with ${this.appointments[index].doctor} updated to ${this.newTime}`;
-    this.reschedulingIndex = null;
-    setTimeout(() => (this.successMessage = ''), 3000);
-  }
-}
-
-cancelReschedule() {
-  this.reschedulingIndex = null;
 }
 
 

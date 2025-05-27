@@ -21,12 +21,16 @@ export class PatientService {
 //   getPatientById(userId: string) {
 //   return this.http.get<PatientProfile>(`http://localhost:3005/api/users/${userId}`);
 // }
-getPatientById(userId: string) {
-  return this.http.get<any>(`http://localhost:3005/api/users/${userId}`);
+getPatientById() {
+  const token = localStorage.getItem('token');
+  const headers = { Authorization: `Bearer ${token}` };
+  return this.http.get<any>(`http://localhost:3005/api/profile/me`, { headers });
 }
 
 
-  updatePatientProfile(userId: string, profileData: any) {
-    return this.http.patch(`http://localhost:3005/api/profile/${userId}`, profileData);
+  updatePatientProfile( profileData: any) {
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    return this.http.patch(`http://localhost:3005/api/profile/me`, profileData, { headers });
   }
 }

@@ -21,6 +21,7 @@ export class PatientDashboardComponent implements OnInit {
   isSidebarCollapsed = false;
   isMobile = false;
   theme = 'light-mode';
+  
   // theme = localStorage.getItem('theme') || 'light-mode';
 
   menu = [

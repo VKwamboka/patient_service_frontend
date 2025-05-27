@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './overview.component.css'
 })
 export class OverviewComponent implements OnInit {
-  patientName = 'Jane';
+  patientName = localStorage.getItem('user') || '';
+;
   currentDate = new Date();
 
   appointmentCount = 3;

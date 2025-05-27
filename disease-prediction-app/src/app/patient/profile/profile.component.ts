@@ -34,15 +34,16 @@ profile = {
     const userId = localStorage.getItem('userId');
     if (!userId) return;
 
-    this.patientService.getPatientById(userId).subscribe({
+    this.patientService.getPatientById().subscribe({
       next: (res) => {
+        console.log(res)
         this.profile = {
-          firstName: res.profile.firstName,
-          lastName: res.profile.lastName,
-          username: res.profile.username,
-          phoneNumber: res.profile.phoneNumber,
-          email: res.email,
-          profilePicture: res.profile.profilePicture
+          firstName: res.firstName,
+          lastName: res.lastName,
+          username: res.username,
+          phoneNumber: res.phoneNumber,
+          email: localStorage.getItem('userEmail') || '',
+          profilePicture: res.profilePicture
         };
       },
       error: (err) => console.error('Failed to load profile', err)
@@ -71,7 +72,7 @@ profile = {
       updatedData.profilePicture = this.profile.profilePicture;
     }
 
-    this.patientService.updatePatientProfile(userId, updatedData).subscribe({
+    this.patientService.updatePatientProfile(updatedData).subscribe({
       next: () => {
         this.snackBar.open('Profile updated successfully!', 'Close', { duration: 3000, panelClass: 'snackbar-success' });
       },
