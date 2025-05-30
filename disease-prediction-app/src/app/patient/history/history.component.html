@@ -3,8 +3,9 @@
     <p class="text-muted">View your past symptom evaluations and appointments.</p>
   
     <!-- Symptom History Section -->
-    <h5 class="mt-4">📝 Symptom Evaluations</h5>
+    
     <div *ngIf="symptomHistory.length > 0; else noSymptoms">
+      <h5 class="mt-4">Symptom Evaluations</h5>
       <div *ngFor="let entry of symptomHistory" class="card mb-3 shadow-sm">
         <div class="card-header bg-light">
           <strong>{{ entry.date }}</strong>
@@ -16,22 +17,22 @@
           </ul>
           <p><strong>Predictions:</strong></p>
           <ul>
-            <li *ngFor="let pred of entry.predictions">🧠 {{ pred }}</li>
+            <li *ngFor="let pred of entry.predictions">{{ pred }}</li>
           </ul>
         </div>
       </div>
     </div>
     <ng-template #noSymptoms>
-      <p class="text-muted text-center mt-3">😕 No symptom records found.</p>
+      <p class="text-muted text-center mt-3 ">😕 No symptom records found.</p>
     </ng-template>
   
     <!-- Appointment History Section -->
-    <h5 class="mt-5">📅 Appointment History</h5>
+    <!-- <h5 class="mt-5">Appointment History</h5>
     <div *ngIf="appointmentHistory.length > 0; else noAppointments">
       <div *ngFor="let appt of appointmentHistory" class="card mb-3 shadow-sm">
         <div class="card-body">
           <h6>{{ appt.doctor }}</h6>
-          <p>🕒 {{ appt.time }}</p>
+          <p>{{ appt.time }}</p>
           <p>Status: <strong>{{ appt.status }}</strong></p>
         </div>
       </div>
@@ -39,5 +40,5 @@
     <ng-template #noAppointments>
       <p class="text-muted text-center mt-3">📭 No past appointments found.</p>
     </ng-template>
-  </div>
+  </div> -->
   

@@ -42,56 +42,48 @@
 
     
   
-    <!-- Appointments List -->
-    <div *ngIf="appointments.length > 0; else noAppointments">
-      <h5>My Appointments</h5>
-      <div *ngFor="let appt of appointments; let i = index" class="card mb-3 shadow-sm">
-        <div class="card-body">
-          <!-- <h6>{{ doctorMap[appt.doctorId] }}</h6> -->
-          <h6>{{ doctorMap[appt.doctorId] || 'Loading...' }}</h6>
-          <p>📅 {{ appt.appointmentStartDate | date: 'fullDate' }}</p>
-          <p>🕒 {{ appt.appointmentStartDate | date: 'shortTime' }}</p>
-          <p>Status: <strong [ngClass]="{'text-success': appt.isConfirmed, 'text-warning': !appt.isConfirmed}">{{ appt.isCornfirmed ? 'Approved' : 'Pending' }}</strong></p>
-           <div class="d-flex gap-2">
-              <button class="btn btn-outline-primary btn-sm" (click)="editAppointment(appt)">
-                Modify Appointment
-              </button>
-              <button class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(appt.id)">
-                Cancel Appointment
-              </button>
-            </div>
-
-           <!-- Inline modify form -->
-          <div *ngIf="editModeId === appt.id" class="mt-2">
-              <mat-form-field class="me-2">
-                <mat-label>New Date</mat-label>
-                <input matInput [matDatepicker]="newDatePicker" [(ngModel)]="editDate">
-                <mat-datepicker-toggle matSuffix [for]="newDatePicker"></mat-datepicker-toggle>
-                <mat-datepicker #newDatePicker></mat-datepicker>
-              </mat-form-field>
-
-              <select class="form-select w-auto d-inline" [(ngModel)]="editTime">
-                <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
-              </select>
-
-              <button class="btn btn-success btn-sm ms-2" (click)="confirmEdit(appt.id)">
-                Save
-              </button>
-              <button class="btn btn-secondary btn-sm ms-2" (click)="cancelEdit()">
-                Cancel
-              </button>
-          </div>
-
-           
-        </div>
+   <!-- Upcoming Appointments -->
+<div *ngIf="upcomingAppointments.length > 0">
+  <h5>Upcoming Appointments</h5>
+  <div *ngFor="let appt of upcomingAppointments" class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h6>{{ doctorMap[appt.doctorId] || 'Loading...' }}</h6>
+      <p>📅 {{ appt.appointmentStartDate | date: 'fullDate' }}</p>
+      <p>🕒 {{ appt.appointmentStartDate | date: 'shortTime' }}</p>
+      <p>Status: 
+        <strong [ngClass]="{ 'text-success': appt.isConfirmed, 'text-warning': !appt.isConfirmed }">
+          {{ appt.isConfirmed ? 'Approved' : 'Pending' }}
+        </strong>
+      </p>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary btn-sm" (click)="editAppointment(appt)">Modify</button>
+        <button class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(appt.id)">Cancel</button>
       </div>
+      <!-- Edit form if needed -->
     </div>
-  
-    <!-- No Appointments Message -->
-    <ng-template #noAppointments>
-      <div class="text-muted text-center mt-4">
-        <p>🗓️ You have no appointments at the moment.</p>
-      </div>
-    </ng-template>
   </div>
-  
+</div>
+
+<!-- Past Appointments -->
+<div *ngIf="pastAppointments.length > 0" class="mt-4">
+  <h5 class="text-muted">Past Appointments</h5>
+  <div *ngFor="let appt of pastAppointments" class="card mb-3 shadow-sm">
+    <div class="card-body">
+      <h6>{{ doctorMap[appt.doctorId] || 'Loading...' }}</h6>
+      <p>📅 {{ appt.appointmentStartDate | date: 'fullDate' }}</p>
+      <p>🕒 {{ appt.appointmentStartDate | date: 'shortTime' }}</p>
+      <p>Status: 
+        <strong [ngClass]="{ 'text-success': appt.isConfirmed, 'text-warning': !appt.isConfirmed }">
+          {{ appt.isConfirmed ? 'Approved' : 'Pending' }}
+        </strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- If no appointments at all -->
+<ng-template #noAppointments>
+  <div class="text-muted text-center mt-4">
+    <p>🗓️ You have no appointments at the moment.</p>
+  </div>
+</ng-template>

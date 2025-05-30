@@ -17,20 +17,20 @@ interface MedicalReport {
 })
 export class ReportsComponent {
   reports: MedicalReport[] = [
-    {
-      id: 1,
-      doctor: 'Dr. Jane Doe',
-      date: 'May 12, 2025',
-      summary: 'Blood test report indicating mild anemia.',
-      fileUrl: '/assets/reports/report1.pdf',
-    },
-    {
-      id: 2,
-      doctor: 'Dr. John Smith',
-      date: 'May 5, 2025',
-      summary: 'Follow-up consultation notes regarding blood pressure.',
-      fileUrl: '/assets/reports/report2.pdf',
-    }
+    // {
+    //   id: 1,
+    //   doctor: 'Dr. Jane Doe',
+    //   date: 'May 12, 2025',
+    //   summary: 'Blood test report indicating mild anemia.',
+    //   fileUrl: '/assets/reports/report1.pdf',
+    // },
+    // {
+    //   id: 2,
+    //   doctor: 'Dr. John Smith',
+    //   date: 'May 5, 2025',
+    //   summary: 'Follow-up consultation notes regarding blood pressure.',
+    //   fileUrl: '/assets/reports/report2.pdf',
+    // }
   ];
 
   downloadReport(report: MedicalReport) {

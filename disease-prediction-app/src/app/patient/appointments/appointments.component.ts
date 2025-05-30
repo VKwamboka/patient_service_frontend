@@ -25,6 +25,8 @@ export class AppointmentsComponent implements OnInit {
   doctors: Doctor[] = [];
   // appointments: Appointment[] = [];
   appointments: any[] = [];
+  pastAppointments: any[] = [];
+  upcomingAppointments: any[] = [];
   selectedDoctorId: string = '';
   selectedDoctor: any = null;
   selectedDate: Date | null = null;        
@@ -67,15 +69,29 @@ export class AppointmentsComponent implements OnInit {
       }
     });
 }
+
+// filter appointments
+filterAppointments(){
+  const now = new Date();
+  this.upcomingAppointments = this.appointments.filter(appt => new Date(appt.appointmentStartDate) >= now);
+  this.pastAppointments = this.appointments.filter(appt => new Date(appt.appointmentStartDate) < now);
+  console.log('Past appointments:', this.pastAppointments);
+
+}
+
+
 // fetch appointments
   fetchAppointments(){
     const patientId = localStorage.getItem('userId');
     if (!patientId) return;
     this.appointmentService.getAppointments(  ).subscribe({
      next: (res) => {
-        this.appointments = res.data;
-        console.log('Fetched appointments:', this.appointments);
+        this.appointments = res.data;      
+        this.filterAppointments();
         this.cdr.detectChanges()
+
+        console.log('Fetched appointments:', this.appointments);
+        
       },
       error: (err) => {
         console.error(err.message);
@@ -83,6 +99,8 @@ export class AppointmentsComponent implements OnInit {
     });
 
   }
+
+
 
 
     // Start editing

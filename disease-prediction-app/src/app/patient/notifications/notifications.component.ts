@@ -21,27 +21,27 @@ export class NotificationsComponent {
     constructor(private elementRef: ElementRef) {}
 
   notifications: Notification[] = [
-  {
-    id: 1,
-    message: 'Critical result from your recent symptoms!',
-    fullMessage: 'Your symptom analysis indicates a high risk for pneumonia. Please consult a doctor immediately.',
-    time: '2h ago',
-    read: false,
-  },
-  {
-    id: 2,
-    message: 'Appointment confirmed with Dr. Smith',
-    fullMessage: 'Your appointment with Dr. John Smith is confirmed for May 18th at 10:00 AM.',
-    time: '1d ago',
-    read: false,
-  },
-  {
-    id: 3,
-    message: 'Your medical report is ready to download.',
-    fullMessage: 'A new report from Dr. Jane Doe has been uploaded. You can download it from your reports section.',
-    time: '3d ago',
-    read: true,
-  }
+  // {
+  //   id: 1,
+  //   message: 'Critical result from your recent symptoms!',
+  //   fullMessage: 'Your symptom analysis indicates a high risk for pneumonia. Please consult a doctor immediately.',
+  //   time: '2h ago',
+  //   read: false,
+  // },
+  // {
+  //   id: 2,
+  //   message: 'Appointment confirmed with Dr. Smith',
+  //   fullMessage: 'Your appointment with Dr. John Smith is confirmed for May 18th at 10:00 AM.',
+  //   time: '1d ago',
+  //   read: false,
+  // },
+  // {
+  //   id: 3,
+  //   message: 'Your medical report is ready to download.',
+  //   fullMessage: 'A new report from Dr. Jane Doe has been uploaded. You can download it from your reports section.',
+  //   time: '3d ago',
+  //   read: true,
+  // }
 ];
   
 

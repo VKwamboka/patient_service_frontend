@@ -23,16 +23,16 @@ interface AppointmentHistoryEntry {
 })
 export class HistoryComponent {
   symptomHistory: SymptomHistoryEntry[] = [
-    {
-      date: 'May 5, 2025',
-      symptoms: ['Fever', 'Cough'],
-      predictions: ['Flu (80%)', 'Common Cold (60%)']
-    },
-    {
-      date: 'May 1, 2025',
-      symptoms: ['Headache', 'Fatigue'],
-      predictions: ['Migraine (75%)', 'Dehydration (55%)']
-    }
+    // {
+    //   date: 'May 5, 2025',
+    //   symptoms: ['Fever', 'Cough'],
+    //   predictions: ['Flu (80%)', 'Common Cold (60%)']
+    // },
+    // {
+    //   date: 'May 1, 2025',
+    //   symptoms: ['Headache', 'Fatigue'],
+    //   predictions: ['Migraine (75%)', 'Dehydration (55%)']
+    // }
   ];
   appointmentHistory: AppointmentHistoryEntry[] = [
     {

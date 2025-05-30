@@ -6,12 +6,15 @@
            
          </mat-icon>
           <span
-                *ngIf="unreadCount > 0"
+                *ngIf="unreadCount > 0; else noNotifications"
                 class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 >
                 {{ unreadCount }}
-            </span>
+          </span>
     </div>
+    <ng-template #noNotifications>
+       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">0</span>
+    </ng-template>
 
          
 
