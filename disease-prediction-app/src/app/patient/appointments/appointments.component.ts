@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import {provideNativeDateAdapter} from '@angular/material/core';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -12,12 +12,6 @@ import { AppointmentService } from '../../services/appointment.service';
 import { Appointment } from '../../services/appointment.service';
 import { AuthService } from '../../services/auth.service';
 
-
-// interface Appointment {
-//   doctor: string;
-//   time: string;
-//   status: 'Active' | 'Past' | 'Cancelled';
-// }
 
 @Component({
   selector: 'app-appointments',
@@ -43,6 +37,53 @@ export class AppointmentsComponent implements OnInit {
   editModeId: string | null = null;
   editDate: Date | null = null;
   editTime: string = '';
+
+  constructor(private router: Router, private route: ActivatedRoute, private doctorService: DoctorService, private authService: AuthService, private appointmentService:AppointmentService, private cdr: ChangeDetectorRef) {
+    
+  }
+  
+
+  ngOnInit(): void {
+    this.fetchDoctors();
+    this.fetchAppointments();
+  }
+   fetchDoctors() {
+    this.doctorService.getDoctors().subscribe({
+      next: (res) => {
+        this.doctors = res.data;
+
+        // lookup map for doctor names
+        this.doctorMap = {};
+        this.doctors?.forEach(doc => {
+          this.doctorMap[doc.id] = `${doc.profile.firstName} ${doc.profile.lastName}`;
+        });
+        this.doctorMapReady = true;
+        console.log('Doctor map:', this.doctorMap);
+
+        this.cdr.detectChanges()
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
+}
+// fetch appointments
+  fetchAppointments(){
+    const patientId = localStorage.getItem('userId');
+    if (!patientId) return;
+    this.appointmentService.getAppointments(  ).subscribe({
+     next: (res) => {
+        this.appointments = res.data;
+        console.log('Fetched appointments:', this.appointments);
+        this.cdr.detectChanges()
+      },
+      error: (err) => {
+        console.error(err.message);
+      }
+    });
+
+  }
+
 
     // Start editing
   editAppointment(appt: any) {
@@ -101,38 +142,7 @@ confirmEdit(appointmentId: string) {
   readonly minDate: Date = new Date(); 
   readonly maxDate: Date = new Date(new Date().setMonth(new Date().getMonth() + 6));
 
-  constructor(private route: ActivatedRoute, private doctorService: DoctorService, private authService: AuthService, private appointmentService:AppointmentService) {}
-
-  ngOnInit(): void {
-    this.fetchDoctors();
-    this.fetchAppointments();
-    // this.route.queryParams.subscribe(params => {
-    //   if (params['doctor']) {
-    //     this.selectedDoctor.id = params['doctor'];
-    //   }
-    // });
-  }
-
-
-  fetchDoctors() {
-  this.doctorService.getDoctors().subscribe({
-    next: (res) => {
-      this.doctors = res.data;
-
-      // lookup map for doctor names
-      this.doctorMap = {};
-      this.doctors.forEach(doc => {
-        this.doctorMap[doc.id] = `${doc.profile.firstName} ${doc.profile.lastName}`;
-      });
-      this.doctorMapReady = true;
-
-      console.log('Doctor map:', this.doctorMap);
-    },
-    error: (err) => {
-      console.error(err.message);
-    }
-  });
-}
+  
 
   updateSelectedDoctor() {
     if (!this.doctors?.length || !this.selectedDoctorId) return;
@@ -148,22 +158,7 @@ confirmEdit(appointmentId: string) {
 
  
 
-  // fetch appointments
-  fetchAppointments(){
-    const patientId = localStorage.getItem('userId');
-    if (!patientId) return;
-    this.appointmentService.getAppointments(  ).subscribe({
-     next: (res) => {
-        this.appointments = res.data;
-        console.log('Fetched appointments:', this.appointments);
-      },
-      error: (err) => {
-        console.error(err.message);
-      }
-    });
-
-  }
-
+  
   // book appointment
   bookAppointment() {
   if (!this.selectedDoctorId || !this.selectedDate || !this.selectedTime) {

@@ -43,14 +43,15 @@
     
   
     <!-- Appointments List -->
-    <div *ngIf="appointments.length > 0 && doctorMapReady; else noAppointments">
+    <div *ngIf="appointments.length > 0; else noAppointments">
       <h5>My Appointments</h5>
       <div *ngFor="let appt of appointments; let i = index" class="card mb-3 shadow-sm">
         <div class="card-body">
-          <h6>{{ doctorMap[appt.doctorId] }}</h6>
+          <!-- <h6>{{ doctorMap[appt.doctorId] }}</h6> -->
+          <h6>{{ doctorMap[appt.doctorId] || 'Loading...' }}</h6>
           <p>📅 {{ appt.appointmentStartDate | date: 'fullDate' }}</p>
           <p>🕒 {{ appt.appointmentStartDate | date: 'shortTime' }}</p>
-          <!-- <p>Status: <strong>{{ appt.status }}</strong></p> -->
+          <p>Status: <strong [ngClass]="{'text-success': appt.isConfirmed, 'text-warning': !appt.isConfirmed}">{{ appt.isCornfirmed ? 'Approved' : 'Pending' }}</strong></p>
            <div class="d-flex gap-2">
               <button class="btn btn-outline-primary btn-sm" (click)="editAppointment(appt)">
                 Modify Appointment

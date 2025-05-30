@@ -16,7 +16,9 @@ export interface Appointment {
   providedIn: 'root',
 })
 export class AppointmentService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    
+  }
 
   createAppointment(data: Appointment): Observable<any> {
     const token = localStorage.getItem('token');
