@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PredictionResultComponent } from '../prediction-result/prediction-result.component';
+import { Disease, PredictionResponse, PredictionService } from '../../services/prediction.service';
+import { Doctor } from '../../services/doctors.service';
+
+
 
 @Component({
   selector: 'app-symptoms',
@@ -9,7 +13,9 @@ import { PredictionResultComponent } from '../prediction-result/prediction-resul
   templateUrl: './symptoms.component.html',
   styleUrl: './symptoms.component.css'
 })
-export class SymptomsComponent {
+export class SymptomsComponent implements OnInit {
+  constructor(private predictionService: PredictionService) {}
+  
   symptomsList: string[] = [
   "itching", "skin_rash", "nodal_skin_eruptions", "continuous_sneezing", "shivering", "chills",
   "joint_pain", "stomach_pain", "acidity", "ulcers_on_tongue", "muscle_wasting", "vomiting",
@@ -41,6 +47,10 @@ export class SymptomsComponent {
   "blister", "red_sore_around_nose", "yellow_crust_ooze"
 ];
 
+ngOnInit(): void {
+
+}
+
 
   selectedSymptoms: string[] = [];
   evaluationDone = false;
@@ -61,34 +71,63 @@ export class SymptomsComponent {
   // submitting symptoms
   loading = false;
   submitted = false;
-  predictionResult: string[] = [];
+  predictionResult: Disease[] = [];
 
   submitSymptoms() {
-    if (this.selectedSymptoms.length === 0) {
-      alert('Please select at least one symptom before submitting.');
-      return;
-    }
-  
-    this.loading = true;
-    this.submitted = false;
-  
-    // Simulate API delay
-    setTimeout(() => {
-      this.predictionResult = [
-        'Flu (80%)',
-        'Common Cold (65%)',
-        'COVID-19 (45%)'
-      ];
-  
+  if (this.selectedSymptoms.length === 0) {
+    alert('Please select at least one symptom before submitting.');
+    return;
+  }
+
+  this.loading = true;
+  this.submitted = false;
+
+  this.predictionService.getPrediction(this.selectedSymptoms).subscribe({
+    next: (res: PredictionResponse) => {
+      console.log('Full response:', res);
+      this.predictionResult = res.diseases; // now an array of Disease objects
+      console.log('Prediction Result:', this.predictionResult);
+
       this.loading = false;
       this.submitted = true;
       this.evaluationDone = true;
-  
-      // Now run alert after loading is done
-      console.log('Submitted symptoms:', this.selectedSymptoms);
       alert('Symptoms submitted for evaluation!');
-    }, 2000);
-  }
+    },
+    error: (err) => {
+      this.loading = false;
+      alert('Error while getting prediction: ' + err.message);
+    }
+  });
+}
+
+
+
+  // submitSymptoms() {
+  //   if (this.selectedSymptoms.length === 0) {
+  //     alert('Please select at least one symptom before submitting.');
+  //     return;
+  //   }
+  
+  //   this.loading = true;
+  //   this.submitted = false;
+  
+  //   // Simulate API delay
+  //   setTimeout(() => {
+  //     this.predictionResult = [
+  //       'Flu (80%)',
+  //       'Common Cold (65%)',
+  //       'COVID-19 (45%)'
+  //     ];
+  
+  //     this.loading = false;
+  //     this.submitted = true;
+  //     this.evaluationDone = true;
+  
+  //     // Now run alert after loading is done
+  //     console.log('Submitted symptoms:', this.selectedSymptoms);
+  //     alert('Symptoms submitted for evaluation!');
+  //   }, 2000);
+  // }
   
   
 

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Disease } from '../../services/prediction.service';
 
 @Component({
   selector: 'app-prediction-result',
@@ -9,5 +10,5 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './prediction-result.component.css'
 })
 export class PredictionResultComponent {
-  @Input() results: string[] = [];
+  @Input() predictionResult: Disease[] = [];
 }

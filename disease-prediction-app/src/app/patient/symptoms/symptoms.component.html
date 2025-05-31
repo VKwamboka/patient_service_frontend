@@ -12,17 +12,26 @@
       />
   
       <!-- Symptom List -->
-      <div class="row g-2">
-        <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
-          <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
-            <button class="btn w-100"
-                    [ngClass]="{ 'btn-outline-primary': !selectedSymptoms.includes(symptom), 'btn-primary': selectedSymptoms.includes(symptom) }"
-                    (click)="toggleSymptom(symptom)">
-              {{ symptom }}
-            </button>
-          </div>
-        </ng-container>
+    <!-- Scrollable Container -->
+<div class="scrollable-symptoms border rounded p-2 mb-3" style="max-height: 240px; overflow-y: auto;">
+  <div class="row g-2">
+    <ng-container *ngIf="filteredSymptoms.length > 0; else noSymptomFound">
+      <div class="col-md-3" *ngFor="let symptom of filteredSymptoms">
+        <button
+          class="btn w-100 text-truncate"
+          [ngClass]="{
+            'btn-outline-primary': !selectedSymptoms.includes(symptom),
+            'btn-primary': selectedSymptoms.includes(symptom)
+          }"
+          (click)="toggleSymptom(symptom)"
+        >
+          {{ symptom }}
+        </button>
       </div>
+    </ng-container>
+  </div>
+</div>
+
   
       <!-- No Symptoms Found -->
       <ng-template #noSymptomFound>
@@ -60,7 +69,7 @@
     <!-- Prediction Result Component -->
     <app-prediction-result
       *ngIf="submitted && predictionResult.length"
-      [results]="predictionResult">
+      [predictionResult]="predictionResult">
     </app-prediction-result>
 
 

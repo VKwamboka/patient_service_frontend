@@ -191,7 +191,7 @@ confirmEdit(appointmentId: string) {
 
   const end = new Date(start.getTime() + 30 * 60 * 1000); // add 30 mins
 
-  const appointmentData: Appointment = {
+  const appointmentData: any = {
     patientId: localStorage.getItem('userId') || '',
     doctorId: this.selectedDoctorId,
     appointmentStartDate: start.toISOString(),
