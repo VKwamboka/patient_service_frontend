@@ -6,6 +6,7 @@ const API_BASE = 'http://localhost:3005/api/appointments';
 
 export interface Appointment {
   // id: string;
+  isConfirmed: boolean;
   patientId: string;
   doctorId: string;
   appointmentStartDate: string;
