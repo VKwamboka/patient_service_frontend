@@ -3,18 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PredictionResultComponent } from '../prediction-result/prediction-result.component';
 import { Disease, PredictionResponse, PredictionService } from '../../services/prediction.service';
-import { Doctor } from '../../services/doctors.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
 @Component({
   selector: 'app-symptoms',
-  imports: [CommonModule, FormsModule, PredictionResultComponent],
+  imports: [CommonModule, FormsModule, PredictionResultComponent, MatSnackBarModule],
   templateUrl: './symptoms.component.html',
   styleUrl: './symptoms.component.css'
 })
 export class SymptomsComponent implements OnInit {
-  constructor(private predictionService: PredictionService) {}
+  constructor(private predictionService: PredictionService, private snackbar: MatSnackBar) {}
   
   symptomsList: string[] = [
   "itching", "skin_rash", "nodal_skin_eruptions", "continuous_sneezing", "shivering", "chills",
@@ -75,7 +75,11 @@ ngOnInit(): void {
 
   submitSymptoms() {
   if (this.selectedSymptoms.length === 0) {
-    alert('Please select at least one symptom before submitting.');
+    this.snackbar.open('Please select at least one symptom before submitting.', 'Close', {
+      duration: 3000,
+      panelClass: ['error-snackbar']
+    });
+    // alert('Please select at least one symptom before submitting.');
     return;
   }
 
@@ -91,43 +95,20 @@ ngOnInit(): void {
       this.loading = false;
       this.submitted = true;
       this.evaluationDone = true;
-      alert('Symptoms submitted for evaluation!');
+      this.snackbar.open('Symptoms submitted for evaluation!', 'Close', {
+        duration: 3000,
+        panelClass: ['snackbar-success']
+      });
+      // alert('Symptoms submitted for evaluation!');
     },
     error: (err) => {
       this.loading = false;
-      alert('Error while getting prediction: ' + err.message);
+      this.snackbar.open('Error while getting prediction: ' + err.message, 'Close', { duration: 3000, panelClass: 'snackbar-error' });
+      // alert('Error while getting prediction: ' + err.message);
     }
   });
 }
 
-
-
-  // submitSymptoms() {
-  //   if (this.selectedSymptoms.length === 0) {
-  //     alert('Please select at least one symptom before submitting.');
-  //     return;
-  //   }
-  
-  //   this.loading = true;
-  //   this.submitted = false;
-  
-  //   // Simulate API delay
-  //   setTimeout(() => {
-  //     this.predictionResult = [
-  //       'Flu (80%)',
-  //       'Common Cold (65%)',
-  //       'COVID-19 (45%)'
-  //     ];
-  
-  //     this.loading = false;
-  //     this.submitted = true;
-  //     this.evaluationDone = true;
-  
-  //     // Now run alert after loading is done
-  //     console.log('Submitted symptoms:', this.selectedSymptoms);
-  //     alert('Symptoms submitted for evaluation!');
-  //   }, 2000);
-  // }
   
   
 

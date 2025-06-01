@@ -9,14 +9,14 @@ import {MatInputModule} from '@angular/material/input';
 import { DoctorService } from '../../services/doctors.service';
 import { Doctor } from '../../services/doctors.service';
 import { AppointmentService } from '../../services/appointment.service';
-import { Appointment } from '../../services/appointment.service';
 import { AuthService } from '../../services/auth.service';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @Component({
   selector: 'app-appointments',
   providers: [provideNativeDateAdapter()],
-  imports: [CommonModule, FormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule],
+  imports: [CommonModule, FormsModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatSnackBarModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './appointments.component.html',
   styleUrl: './appointments.component.css'
@@ -32,6 +32,7 @@ export class AppointmentsComponent implements OnInit {
   selectedDate: Date | null = null;        
   selectedTime: string = '';  
   successMessage = '';
+  
 
   doctorMap: { [id: string]: string } = {};
   doctorMapReady = false;
@@ -40,7 +41,7 @@ export class AppointmentsComponent implements OnInit {
   editDate: Date | null = null;
   editTime: string = '';
 
-  constructor(private router: Router, private route: ActivatedRoute, private doctorService: DoctorService, private authService: AuthService, private appointmentService:AppointmentService, private cdr: ChangeDetectorRef) {
+  constructor(private snackBar: MatSnackBar, private route: ActivatedRoute, private doctorService: DoctorService, private authService: AuthService, private appointmentService:AppointmentService, private cdr: ChangeDetectorRef) {
     
   }
   
@@ -48,6 +49,15 @@ export class AppointmentsComponent implements OnInit {
   ngOnInit(): void {
     this.fetchDoctors();
     this.fetchAppointments();
+
+    this.route.queryParams.subscribe(params => {
+    const doctorIdFromQuery = params['doctorId'];
+    if (doctorIdFromQuery) {
+      this.selectedDoctorId = doctorIdFromQuery;
+
+      this.updateSelectedDoctor();
+    }
+  });
   }
    fetchDoctors() {
     this.doctorService.getDoctors().subscribe({
@@ -75,7 +85,7 @@ filterAppointments(){
   const now = new Date();
   this.upcomingAppointments = this.appointments.filter(appt => new Date(appt.appointmentStartDate) >= now);
   this.pastAppointments = this.appointments.filter(appt => new Date(appt.appointmentStartDate) < now);
-  console.log('Past appointments:', this.pastAppointments);
+  // console.log('Past appointments:', this.pastAppointments);
 
 }
 
@@ -147,10 +157,12 @@ confirmEdit(appointmentId: string) {
     next: () => {
       this.cancelEdit();
       this.fetchAppointments();
+      this.snackBar.open('Appointment updated successfully!', 'Close', { duration: 3000, panelClass: 'snackbar-success' });
     },
     error: err => {
       console.error(err);
-      alert('Failed to update appointment.');
+      this.snackBar.open('Failed to update appointment!', 'Close', { duration: 3000, panelClass: 'snackbar-error' });
+      // alert('Failed to update appointment.');
     }
   });
 }
@@ -180,7 +192,9 @@ confirmEdit(appointmentId: string) {
   // book appointment
   bookAppointment() {
   if (!this.selectedDoctorId || !this.selectedDate || !this.selectedTime) {
-    alert('Please select a doctor, date, and time.');
+    this.snackBar.open('Please select a doctor, date, and time.', 'Close', { duration: 3000, panelClass: 'snackbar-warning' });
+
+    // alert('Please select a doctor, date, and time.');
     return;
   }
 
@@ -207,8 +221,10 @@ confirmEdit(appointmentId: string) {
       setTimeout(() => (this.successMessage = ''), 3000);
     },
     error: (err) => {
-      console.error('Booking error:', err.message);
-      alert('Failed to book appointment. Please try again.');
+      // console.error('Booking error:', err.message);
+      this.snackBar.open('Failed to book appointment. Please try again with a different time or date.', 'Close', { duration: 3000, panelClass: 'snackbar-error' });
+
+      // alert('Failed to book appointment. Please try again with a different time or date.');
     }
   });
 }
@@ -222,7 +238,8 @@ cancelAppointment(appointmentId: string) {
       },
       error: err => {
         console.error(err);
-        alert('Failed to cancel appointment.');
+        this.snackBar.open('Failed to cancel appointment.', 'Close', { duration: 3000, panelClass: 'snackbar-error' });
+        // alert('Failed to cancel appointment.');
       }
     });
   }

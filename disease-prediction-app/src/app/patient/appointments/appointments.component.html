@@ -59,7 +59,30 @@
         <button class="btn btn-outline-primary btn-sm" (click)="editAppointment(appt)">Modify</button>
         <button class="btn btn-outline-danger btn-sm" (click)="cancelAppointment(appt.id)">Cancel</button>
       </div>
-      <!-- Edit form if needed -->
+      <!-- Edit Mode Form -->
+      <div *ngIf="editModeId === appt.id" class="mt-3">
+        <div class="row g-2">
+          <div class="col-md-5">
+            <mat-form-field class="w-100">
+              <mat-label>New Date</mat-label>
+              <input matInput [matDatepicker]="editPicker" [(ngModel)]="editDate">
+              <mat-datepicker-toggle matSuffix [for]="editPicker"></mat-datepicker-toggle>
+              <mat-datepicker #editPicker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-3">
+            <label>New Time</label>
+            <select class="form-select" [(ngModel)]="editTime">
+              <option *ngFor="let t of availableTimes" [value]="t">{{ t }}</option>
+            </select>
+          </div>
+          <div class="col-md-4 d-flex align-items-end gap-2">
+            <button class="btn btn-success btn-sm" (click)="confirmEdit(appt.id)">Save</button>
+            <button class="btn btn-secondary btn-sm" (click)="cancelEdit()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
