@@ -36,10 +36,10 @@
 
             <div class="mb-3">
               <label>Password:</label>
-              <input name="password" type="password" class="form-control" [(ngModel)]="user.password" (ngModelChange)="clearError()" required minlength="6" #passRef="ngModel"  />
+              <input name="password" type="password" class="form-control" [(ngModel)]="user.password" (ngModelChange)="clearError()" required minlength="" #passRef="ngModel"  />
               <div *ngIf="passRef.invalid && passRef.touched" class="text-danger">
                 <small *ngIf="passRef.errors?.['required']">Password is required.</small>
-                <small *ngIf="passRef.errors?.['minlength']">Min 6 characters.</small>
+                <!-- <small *ngIf="passRef.errors?.['minlength']">Min 6 characters.</small> -->
               </div>
             </div>
 
