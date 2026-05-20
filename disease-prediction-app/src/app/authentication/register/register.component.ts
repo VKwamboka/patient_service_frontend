@@ -76,7 +76,7 @@ export class RegisterComponent {
       this.loading = false;
     }
     });
-    console.log('Form submitted:', form.value);
+    // console.log('Form submitted:', form.value);
   }
 
   clearError(){
