@@ -17,6 +17,10 @@
 
       
     </header>
+    <div class="sidebar-overlay" 
+     *ngIf="isMobile && !isSidebarCollapsed"
+     (click)="toggleSidebar()">
+    </div>  
   
     <div class="d-flex flex-grow-1">
       <!-- Sidebar -->
@@ -29,7 +33,9 @@
             <a class="nav-link text-white"
                routerLink="{{item.route}}"
                routerLinkActive="active"
-               [routerLinkActiveOptions]="{ exact: true }">
+               [routerLinkActiveOptions]="{ exact: true }"
+               (click)="isMobile && toggleSidebar()"
+               >
               <i [class]="item.icon + ' me-2'"></i>{{ item.label }}
             </a>
           </li>
