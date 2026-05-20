@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './patient-dashboard.component.css'
 })
 export class PatientDashboardComponent implements OnInit {
-  isSidebarCollapsed = true;
+  isSidebarCollapsed = false;
   isMobile = false;
   theme = 'light-mode';
   
