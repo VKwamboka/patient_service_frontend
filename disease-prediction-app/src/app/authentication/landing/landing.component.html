@@ -1,99 +1,75 @@
 <div class="landing-page">
-  <nav class="navbar">
+  <nav class="navbar px-4 px-md-5">
     <div class="nav-logo">Smart<span>Doc</span></div>
-    <div class="nav-badge">AI-Powered Health Platform</div>
+    <div class="nav-badge d-none d-sm-block">✦ AI-Powered Health Platform</div>
   </nav>
 
-  <div class=" container hero">
-    <div class="col-md-6 hero-left">
-      <div class="trust-pill">
-        <div class="dot"></div> Trusted by patients &amp; doctors
-      </div>
-      <h1>Diagnose smarter,<br>live <span class="accent">healthier</span></h1>
-      <p class="subtitle">Get instant AI-driven disease predictions from your symptoms, matched with the right specialists — all in seconds.</p>
-      <div class="buttons">
-        <button mat-button class="btn-primary" routerLink="/login/patient">Get started as patient</button>
-        <!-- <button mat-button class="btn-secondary" routerLink="/login/doctor">I'm a doctor →</button> -->
-      </div>
-      <div class="stats">
-        <div class="stat">
-          <div class="stat-val">95%</div>
-          <div class="stat-lbl">Prediction accuracy</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-val">60s</div>
-          <div class="stat-lbl">Average diagnosis time</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat">
-          <div class="stat-val">50+</div>
-          <div class="stat-lbl">Specialist doctors</div>
-        </div>
-      </div>
-    </div>
+  <div class="container-fluid flex-grow-1 d-flex align-items-center px-4 px-md-5 py-5">
+    <div class="row w-100 align-items-center g-5">
 
-    <!-- <div class="hero-right">
-      <div class="feature-card">
-        <div class="card-title">How it works</div>
-        <div class="feature-row">
-          <div class="feature-icon">①</div>
+      <div class="col-12 col-lg-7">
+        <div class="trust-pill mb-4">
+          <div class="dot"></div> Trusted by patients &amp; doctors
+        </div>
+        <h1>Diagnose smarter,<br>live <span class="accent">healthier</span></h1>
+        <p class="subtitle">Get instant AI-driven disease predictions from your symptoms, matched with the right specialists — all in seconds.</p>
+        <div class="d-flex flex-wrap gap-3 mb-5">
+          <button mat-button class="btn-primary" routerLink="/login/patient">Get started</button>
+          <!-- <button mat-button class="btn-secondary" routerLink="/login/doctor">I'm a doctor →</button> -->
+        </div>
+        <div class="d-flex align-items-center gap-4">
           <div>
-            <div class="feature-title">Describe your symptoms</div>
-            <div class="feature-desc">Enter what you're feeling — our AI understands natural language</div>
+            <div class="stat-val">95%</div>
+            <div class="stat-lbl">Prediction accuracy</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div>
+            <div class="stat-val">60s</div>
+            <div class="stat-lbl">Average diagnosis time</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div>
+            <div class="stat-val">50+</div>
+            <div class="stat-lbl">Specialist doctors</div>
           </div>
         </div>
-        <div class="feature-row">
-          <div class="feature-icon">②</div>
-          <div>
-            <div class="feature-title">AI predicts conditions</div>
-            <div class="feature-desc">Get ranked diagnoses with confidence scores instantly</div>
-          </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">③</div>
-          <div>
-            <div class="feature-title">Book the right doctor</div>
-            <div class="feature-desc">Matched specialists from our network, book in one click</div>
-          </div>
-        </div>
-        <div class="card-divider"></div>
-        <div class="privacy-note">🔒 Your health data is private and secure</div>
       </div>
-    </div> -->
-    <div class="col-md-6 hero-right">
-      <img src="/doctor1.png" alt="AI Health Illustration" class="landing-image">
-      <div class="feature-card">
-        <div class="card-title">How it works</div>
-        <div class="feature-row">
-          <div class="feature-icon">①</div>
-          <div>
-            <div class="feature-title">Describe your symptoms</div>
-            <div class="feature-desc">Enter what you're feeling — our AI understands natural language</div>
+
+      <div class="col-12 col-lg-5">
+        <img src="/doctor1.png" alt="AI Health Illustration" class="landing-image d-block mx-auto mb-4">
+        <div class="feature-card">
+          <div class="card-title">How it works</div>
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="feature-icon">①</div>
+            <div>
+              <div class="feature-title">Describe your symptoms</div>
+              <div class="feature-desc">Enter what you're feeling — our AI understands natural language</div>
+            </div>
           </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">②</div>
-          <div>
-            <div class="feature-title">AI predicts conditions</div>
-            <div class="feature-desc">Get ranked diagnoses with confidence scores instantly</div>
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <div class="feature-icon">②</div>
+            <div>
+              <div class="feature-title">AI predicts conditions</div>
+              <div class="feature-desc">Get ranked diagnoses with confidence scores instantly</div>
+            </div>
           </div>
-        </div>
-        <div class="feature-row">
-          <div class="feature-icon">③</div>
-          <div>
-            <div class="feature-title">Book the right doctor</div>
-            <div class="feature-desc">Matched specialists from our network, book in one click</div>
+          <div class="d-flex align-items-start gap-3">
+            <div class="feature-icon">③</div>
+            <div>
+              <div class="feature-title">Book the right doctor</div>
+              <div class="feature-desc">Matched specialists from our network, book in one click</div>
+            </div>
           </div>
+          <div class="card-divider my-3"></div>
+          <div class="privacy-note">🔒 Your health data is private and secure</div>
         </div>
-        <div class="card-divider"></div>
-        <div class="privacy-note">🔒 Your health data is private and secure</div>
       </div>
+
     </div>
   </div>
 
-  <div class="bottom-bar">
-    <div class="trust-items">
+  <div class="bottom-bar px-4 px-md-5 py-3">
+    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-md-start">
       <!-- <span class="trust-item">✓ No sign-up required to explore</span> -->
       <span class="trust-item">✓ Available 24/7</span>
       <span class="trust-item">✓ Not a replacement for professional care</span>
