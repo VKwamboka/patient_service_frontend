@@ -20,7 +20,7 @@ export interface SignupPayload {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly BASE_URL = 'http://localhost:3005/api/users'; 
+  private readonly BASE_URL = 'https://smartdoc-servive-backend.onrender.com/api/users'; 
 
   constructor(private http: HttpClient, private router: Router) {}
 

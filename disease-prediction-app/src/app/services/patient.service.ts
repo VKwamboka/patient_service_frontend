@@ -24,13 +24,13 @@ export class PatientService {
 getPatientById() {
   const token = localStorage.getItem('token');
   const headers = { Authorization: `Bearer ${token}` };
-  return this.http.get<any>(`http://localhost:3005/api/profile/me`, { headers });
+  return this.http.get<any>(`https://smartdoc-servive-backend.onrender.com/api/profile/me`, { headers });
 }
 
 
   updatePatientProfile( profileData: any) {
     const token = localStorage.getItem('token');
     const headers = { Authorization: `Bearer ${token}` };
-    return this.http.patch(`http://localhost:3005/api/profile/me`, profileData, { headers });
+    return this.http.patch(`https://smartdoc-servive-backend.onrender.com/api/profile/me`, profileData, { headers });
   }
 }

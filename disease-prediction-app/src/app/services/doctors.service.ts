@@ -31,7 +31,7 @@ export interface PaginatedDoctorResponse {
   providedIn: 'root'
 })
 export class DoctorService {
-  private readonly baseUrl = 'http://localhost:3005/api/users';
+  private readonly baseUrl = 'https://smartdoc-servive-backend.onrender.com/api/users';
 
   constructor(private http: HttpClient) {}
 

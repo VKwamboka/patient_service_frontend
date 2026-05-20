@@ -23,7 +23,7 @@ export interface PredictionResponse {
   providedIn: 'root'
 })
 export class PredictionService {
-  private apiUrl = 'http://localhost:3005/api/predict'; 
+  private apiUrl = 'https://smartdoc-servive-backend.onrender.com/api/predict'; 
 
   constructor(private http: HttpClient) {}
 
