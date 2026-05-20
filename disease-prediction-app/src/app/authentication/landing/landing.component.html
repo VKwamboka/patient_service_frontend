@@ -1,26 +1,73 @@
 <div class="landing-page">
-    <nav class="navbar">
-      <!-- <img src="assets/logo.png" alt="Logo" class="logo"> -->
-    </nav>
-  
-    <div class="container">
-      <div class="row align-items-center">
-        <!-- Left Side -->
-        <div class="col-md-7 text-left text-white">
-          <h1>Diagnose Smarter, Live Healthier!</h1>
-          <p>Get instant, AI-driven health insights and take control of your well-being!</p>
-          <div class="buttons">
-            <button mat-button color="primary" class="btn-custom" routerLink="/login/patient">Login to Start</button>
-            <!-- <button mat-button color="primary" class="btn-custom" routerLink="/login/doctor">Login as Doctor</button> -->
-          </div>
+  <nav class="navbar">
+    <div class="nav-logo">Smart<span>Doc</span></div>
+    <div class="nav-badge">✦ AI-Powered Health Platform</div>
+  </nav>
 
+  <div class="hero">
+    <div class="hero-left">
+      <div class="trust-pill">
+        <div class="dot"></div> Trusted by patients &amp; doctors
+      </div>
+      <h1>Diagnose smarter,<br>live <span class="accent">healthier</span></h1>
+      <p class="subtitle">Get instant AI-driven disease predictions from your symptoms, matched with the right specialists — all in seconds.</p>
+      <div class="buttons">
+        <button mat-button class="btn-primary" routerLink="/login/patient">Get started as patient</button>
+        <button mat-button class="btn-secondary" routerLink="/login/doctor">I'm a doctor →</button>
+      </div>
+      <div class="stats">
+        <div class="stat">
+          <div class="stat-val">95%</div>
+          <div class="stat-lbl">Prediction accuracy</div>
         </div>
-  
-        <!-- Right Side -->
-        <div class="col-md-5 text-center">
-            <img src="/doctor1.png" alt="Health Illustration" class="landing-image">
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-val">60s</div>
+          <div class="stat-lbl">Average diagnosis time</div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <div class="stat-val">50+</div>
+          <div class="stat-lbl">Specialist doctors</div>
         </div>
       </div>
     </div>
+
+    <div class="hero-right">
+      <div class="feature-card">
+        <div class="card-title">How it works</div>
+        <div class="feature-row">
+          <div class="feature-icon">①</div>
+          <div>
+            <div class="feature-title">Describe your symptoms</div>
+            <div class="feature-desc">Enter what you're feeling — our AI understands natural language</div>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">②</div>
+          <div>
+            <div class="feature-title">AI predicts conditions</div>
+            <div class="feature-desc">Get ranked diagnoses with confidence scores instantly</div>
+          </div>
+        </div>
+        <div class="feature-row">
+          <div class="feature-icon">③</div>
+          <div>
+            <div class="feature-title">Book the right doctor</div>
+            <div class="feature-desc">Matched specialists from our network, book in one click</div>
+          </div>
+        </div>
+        <div class="card-divider"></div>
+        <div class="privacy-note">🔒 Your health data is private and secure</div>
+      </div>
+    </div>
   </div>
-  
+
+  <div class="bottom-bar">
+    <div class="trust-items">
+      <span class="trust-item">✓ No sign-up required to explore</span>
+      <span class="trust-item">✓ Available 24/7</span>
+      <span class="trust-item">✓ Not a replacement for professional care</span>
+    </div>
+  </div>
+</div>
