@@ -95,7 +95,14 @@
   gap: 40px;
   flex: 1;
 }
-
+.landing-image {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  display: block;
+  margin: 0 auto 20px;
+  filter: drop-shadow(0 0 30px rgba(37, 150, 190, 0.3));
+}
 .hero-left {
   flex: 1;
   max-width: 520px;
